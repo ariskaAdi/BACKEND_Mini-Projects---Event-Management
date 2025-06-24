@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  CUSTOMER
+  ORGANIZER
+}
+
+enum TransactionStatus {
+  WAITING_PAYMENT
+  WAITING_CONFIRMATION
+  DONE
+  REJECTED
+  EXPIRED
+  CANCELED
+}
+
+enum EventCategory {
+  MUSIC
+  SPORTS
+  EDUCATION
+  WORKSHOP
+  BUSINESS
+  TECHNOLOGY
+  ART
+  OTHER
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String   @unique
+  password       String
+  role           Role
+  profilePicture String?
+  referralCode   String   @unique
+  referredBy     String?
+  points         Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  transactions   Transaction[]
+  events         Event[]        @relation("OrganizerEvents")
+  reviews        Review[]
+  coupons        Coupon[]
+  pointHistories PointHistory[]
+}
+
+model Event {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  picture     String? // ✅ Gambar Event
+  category    EventCategory // ✅ Enum kategori event
+  location    String
+  price       Int // dalam IDR
+  isPaid      Boolean
+  startDate   DateTime
+  endDate     DateTime
+  seats       Int
+  organizer   User          @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  organizerId Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  vouchers     Voucher[]
+  reviews      Review[]
+  transactions Transaction[]
+}
+
+model Transaction {
+  id           Int               @id @default(autoincrement())
+  userId       Int
+  eventId      Int
+  status       TransactionStatus
+  paymentProof String?
+  quantity     Int
+  totalPaid    Int // harga final
+  expiredAt    DateTime
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  eventId   Int
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model Voucher {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  discount  Int // dalam IDR
+  eventId   Int
+  startDate DateTime
+  endDate   DateTime
+
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model Coupon {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  code      String   @unique
+  discount  Int // dalam IDR
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model PointHistory {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  amount    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
