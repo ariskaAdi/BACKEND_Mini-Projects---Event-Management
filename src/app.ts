@@ -5,6 +5,7 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import AuthRouter from "./routes/auth.router";
 import UserRouter from "./routes/user.router";
 import EventRouter from "./routes/event.router";
+import logger from "./utils/logger";
 
 const PORT: string | number = process.env.PORT || 4000;
 
@@ -37,6 +38,9 @@ class App {
   private errorHandler(): void {
     this.app.use(
       (error: any, req: Request, res: Response, next: NextFunction) => {
+        logger.error(
+          `${req.method} ${req.path} ${error.message} ${JSON.stringify(error)}`
+        );
         res.status(error.rc || 500).send(error);
       }
     );

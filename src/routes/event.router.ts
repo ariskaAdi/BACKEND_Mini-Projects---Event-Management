@@ -1,5 +1,6 @@
 import { Router } from "express";
 import EventController from "../controllers/event.controller";
+import { uploaderMemory } from "../middleware/uploader";
 
 class EventRouter {
   private route: Router;
@@ -14,8 +15,16 @@ class EventRouter {
   private initializeRoutes(): void {
     this.route.get("/", this.eventController.getAll);
     this.route.get("/:id", this.eventController.getById);
-    this.route.post("/", this.eventController.createEvent);
-    this.route.patch("/:id", this.eventController.updateEvent);
+    this.route.post(
+      "/",
+      uploaderMemory().single("picture"),
+      this.eventController.createEvent
+    );
+    this.route.patch(
+      "/:id",
+      uploaderMemory().single("picture"),
+      this.eventController.updateEvent
+    );
     this.route.delete("/:id", this.eventController.deleteEvent);
   }
 

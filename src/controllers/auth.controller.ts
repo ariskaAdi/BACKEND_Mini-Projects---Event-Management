@@ -4,6 +4,8 @@ import { hashPassword } from "../utils/hash";
 import { Role } from "../../prisma/generated/client";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import AppError from "../errors/AppError";
+import { transport } from "../config/nodemailer";
 
 class AuthController {
   public async register(
@@ -20,7 +22,7 @@ class AuthController {
         },
       });
       if (existingUser) {
-        throw { rc: 400, success: false, message: "User already exist" };
+        throw new AppError("User already exist", 400);
       }
 
       const generatedReferral = Math.random().toString(36).substring(2, 8);
@@ -53,6 +55,14 @@ class AuthController {
         });
       }
 
+      await transport.sendMail({
+        from: process.env.MAILER_SENDER,
+        to: newUser.email,
+        subject: "Registration successful",
+        html: `
+        <h1>Thank you for registering ${newUser.name}</h1>`,
+      });
+
       res
         .status(201)
         .send({ message: "User registered", newUser, success: true });
@@ -74,11 +84,11 @@ class AuthController {
         },
       });
       if (!user) {
-        throw { rc: 404, message: "User not exist" };
+        throw new AppError("User not found", 404);
       }
       const comparePassword = await compare(password, user.password);
       if (!comparePassword) {
-        throw { rc: 401, message: "Password is wrong" };
+        throw new AppError("Invalid password", 401);
       }
 
       const token = sign(

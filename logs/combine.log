@@ -1,0 +1,45 @@
+2025-06-26 20:05:18 [ERROR]: POST /auth/register User already exist {"rc":400,"success":false,"message":"User already exist"}
+2025-06-26 20:25:35 [ERROR]: POST /auth/register User already exist {"statusCode":400,"success":false}
+2025-06-26 20:29:19 [ERROR]: POST /auth/register User already exist {"statusCode":400,"success":false,"message":"User already exist"}
+2025-06-26 20:30:58 [ERROR]: POST /auth/login Invalid password {"statusCode":401,"success":false,"message":"Invalid password"}
+2025-06-27 21:15:03 [ERROR]: POST /auth/register Username is required {"statusCode":400,"success":false}
+2025-06-27 21:16:38 [ERROR]: POST /auth/register Username is required {"statusCode":400,"success":false,"message":"Username is required"}
+2025-06-27 21:17:51 [ERROR]: POST /auth/register Invalid email format {"statusCode":400,"success":false,"message":"Invalid email format"}
+2025-06-27 21:18:08 [ERROR]: POST /auth/register Password must be 6+ characters with uppercase, lowercase, and number {"statusCode":400,"success":false,"message":"Password must be 6+ characters with uppercase, lowercase, and number"}
+2025-06-27 21:18:57 [ERROR]: POST /auth/register 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\auth.controller.ts:18:46
+
+  15 const { name, email, password, referralCode } = req.body;
+  16 
+  17 try {
+→ 18   const existingUser = await prisma.user.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-06-27 21:20:13 [ERROR]: POST /auth/login Password is required and must be at least 6 characters {"statusCode":400,"success":false,"message":"Password is required and must be at least 6 characters"}
+2025-06-28 00:49:27 [ERROR]: POST /event 
+Invalid `prisma.event.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:41:40
+
+  38 if (req.file) {
+  39   uploadImage = await cloudinaryUpload(req.file);
+  40 }
+→ 41 const event = await prisma.event.create({
+       data: {
+         title: "Tech Summit 2025",
+         description: "Largest tech event in Asia",
+         location: "Bandung",
+         price: "100000",
+                ~~~~~~~~
+         isPaid: "true",
+         startDate: new Date("2025-09-01T06:00:00.000Z"),
+         endDate: new Date("2025-09-01T12:00:00.000Z"),
+         organizerId: 1,
+         seats: "300",
+         picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1751046566/jwpo4tiri8qobkcrnjer.jpg",
+         category: "TECHNOLOGY"
+       }
+     })
+
+Argument `price`: Invalid value provided. Expected Int, provided String. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}

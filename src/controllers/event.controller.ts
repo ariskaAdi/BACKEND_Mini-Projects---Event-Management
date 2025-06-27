@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import { EventCategory } from "../../prisma/generated/client";
+import { cloudinaryUpload } from "../config/cloudinary";
 
 class EventController {
   public async createEvent(
@@ -32,18 +33,23 @@ class EventController {
       if (start < new Date()) {
         throw { rc: 400, message: "Start date must be in the future" };
       }
+
+      let uploadImage = null;
+      if (req.file) {
+        uploadImage = await cloudinaryUpload(req.file);
+      }
       const event = await prisma.event.create({
         data: {
           title,
           description,
           location,
-          price,
-          isPaid,
+          price: Number(price),
+          isPaid: isPaid === "true",
           startDate: start,
           endDate: end,
           organizerId: Number(organizerId),
-          seats,
-          picture,
+          seats: Number(seats),
+          picture: uploadImage?.secure_url || "",
           category,
         },
       });
@@ -121,6 +127,20 @@ class EventController {
       category,
     } = req.body;
     try {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      if (end <= start) {
+        throw { rc: 400, message: "End date must be after start date" };
+      }
+
+      if (start < new Date()) {
+        throw { rc: 400, message: "Start date must be in the future" };
+      }
+      let uploadImage = null;
+      if (req.file) {
+        uploadImage = await cloudinaryUpload(req.file);
+      }
       const event = await prisma.event.update({
         where: {
           id: eventId,
@@ -129,12 +149,12 @@ class EventController {
           title,
           description,
           location,
-          price,
-          isPaid: isPaid(false),
-          startDate: new Date(startDate),
-          endDate: new Date(endDate),
+          price: Number(price),
+          isPaid,
+          startDate: start,
+          endDate: end,
           organizer,
-          seats,
+          seats: Number(seats),
           picture,
           category,
         },
