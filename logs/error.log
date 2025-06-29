@@ -43,3 +43,266 @@ D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event
      })
 
 Argument `price`: Invalid value provided. Expected Int, provided String. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-06-28 15:03:58 [ERROR]: PATCH /event/3 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture  ","storageErrors":[]}
+2025-06-28 15:05:27 [ERROR]: PATCH /event/3 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture  ","storageErrors":[]}
+2025-06-28 15:10:00 [ERROR]: PATCH /event/3 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture  ","storageErrors":[]}
+2025-06-28 15:12:05 [ERROR]: PATCH /event/3 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture  ","storageErrors":[]}
+2025-06-28 15:20:47 [ERROR]: POST /event 
+Invalid `prisma.event.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:41:40
+
+  38 if (req.file) {
+  39   uploadImage = await cloudinaryUpload(req.file);
+  40 }
+→ 41 const event = await prisma.event.create({
+       data: {
+         title: "Live Jazz Night Jakarta",
+         description: "An intimate night of smooth jazz with top local artists",
+         location: "Jakarta",
+         price: 150000,
+         isPaid: true,
+         startDate: new Date("2025-08-15T19:00:00.000Z"),
+         endDate: new Date("2025-08-15T22:00:00.000Z"),
+         organizerId: 2,
+         seats: 200,
+         picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1751098847/ly4lnbktxwhixrpslwwx.jpg",
+         category: "music"
+                   ~~~~~~~
+       }
+     })
+
+Invalid value for argument `category`. Expected EventCategory. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-06-28 15:21:35 [ERROR]: POST /event 
+Invalid `prisma.event.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:41:40
+
+  38 if (req.file) {
+  39   uploadImage = await cloudinaryUpload(req.file);
+  40 }
+→ 41 const event = await prisma.event.create({
+       data: {
+         title: "Live Jazz Night Jakarta",
+         description: "An intimate night of smooth jazz with top local artists",
+         location: "Jakarta",
+         price: 150000,
+         isPaid: true,
+         startDate: new Date("2025-08-15T19:00:00.000Z"),
+         endDate: new Date("2025-08-15T22:00:00.000Z"),
+         organizerId: 2,
+         seats: 200,
+         picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1751098892/prrw9padytacx4ndllyo.jpg",
+         category: "music"
+                   ~~~~~~~
+       }
+     })
+
+Invalid value for argument `category`. Expected EventCategory. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-06-28 17:09:25 [ERROR]: GET /event/6 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:96:40
+
+  93 ): Promise<void> {
+  94   const eventId = Number(req.params.id);
+  95   try {
+→ 96     const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 17:09:44 [ERROR]: GET /event/6 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:96:40
+
+  93 ): Promise<void> {
+  94   const eventId = Number(req.params.id);
+  95   try {
+→ 96     const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 17:09:48 [ERROR]: GET /event/6 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:96:40
+
+  93 ): Promise<void> {
+  94   const eventId = Number(req.params.id);
+  95   try {
+→ 96     const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 17:09:55 [ERROR]: GET /event/6 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:96:40
+
+  93 ): Promise<void> {
+  94   const eventId = Number(req.params.id);
+  95   try {
+→ 96     const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 17:10:27 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 17:23:19 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 18:35:17 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 20:53:29 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-28 22:33:33 [ERROR]: POST /event Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture","storageErrors":[]}
+2025-06-28 22:35:03 [ERROR]: POST /event Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture","storageErrors":[]}
+2025-06-28 22:44:49 [ERROR]: POST /event 
+Invalid `prisma.event.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:41:40
+
+  38 if (req.file) {
+  39   uploadImage = await cloudinaryUpload(req.file);
+  40 }
+→ 41 const event = await prisma.event.create({
+       data: {
+         title: "TEST",
+         description: "TEST",
+         location: "TEST",
+         price: 2700000,
+         isPaid: true,
+         startDate: new Date("2027-09-08T02:00:00.000Z"),
+         endDate: new Date("2027-09-08T10:00:00.000Z"),
+         organizerId: 2,
+         seats: NaN,
+         picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1751125486/thc4lnfm0e79d1dmaw5b.jpg",
+         category: "BUSINESS",
+     +   organizer: {
+     +     create: UserCreateWithoutEventsInput | UserUncheckedCreateWithoutEventsInput,
+     +     connectOrCreate: UserCreateOrConnectWithoutEventsInput,
+     +     connect: UserWhereUniqueInput
+     +   }
+       }
+     })
+
+Argument `organizer` is missing. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-06-28 22:53:54 [ERROR]: POST /event 
+Invalid `prisma.event.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:41:40
+
+  38 if (req.file) {
+  39   uploadImage = await cloudinaryUpload(req.file);
+  40 }
+→ 41 const event = await prisma.event.create({
+       data: {
+         title: "TEST",
+         description: "TSET",
+         location: "MALANG",
+         price: 2700000,
+         isPaid: true,
+         startDate: new Date("2029-09-09T02:00:00.000Z"),
+         endDate: new Date("2029-09-09T10:00:00.000Z"),
+         organizerId: 2,
+         seats: NaN,
+         picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1751126031/fonxyagkyv8jknnuns3i.jpg",
+         category: "BUSINESS",
+     +   organizer: {
+     +     create: UserCreateWithoutEventsInput | UserUncheckedCreateWithoutEventsInput,
+     +     connectOrCreate: UserCreateOrConnectWithoutEventsInput,
+     +     connect: UserWhereUniqueInput
+     +   }
+       }
+     })
+
+Argument `organizer` is missing. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-06-28 23:03:35 [ERROR]: POST /event 
+Invalid `prisma.event.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:41:40
+
+  38 if (req.file) {
+  39   uploadImage = await cloudinaryUpload(req.file);
+  40 }
+→ 41 const event = await prisma.event.create(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-06-29 10:22:06 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-06-29 10:22:45 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-06-29 15:03:37 [ERROR]: PATCH /event/8 
+Invalid `prisma.event.update()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:153:40
+
+  150 if (req.file) {
+  151   uploadImage = await cloudinaryUpload(req.file);
+  152 }
+→ 153 const event = await prisma.event.update({
+        where: {
+          id: 8
+        },
+        data: {
+          title: "test 2 update",
+          description: "test 2 update",
+          location: "surabaya",
+          price: 1300000,
+          isPaid: "true",
+                  ~~~~~~
+          startDate: new Date("2025-06-29T11:05:00.000Z"),
+          endDate: new Date("2025-07-01T09:04:00.000Z"),
+          organizer: undefined,
+          seats: 2,
+          picture: "",
+          category: "BUSINESS"
+        }
+      })
+
+Argument `isPaid`: Invalid value provided. Expected Boolean or BoolFieldUpdateOperationsInput, provided String. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}

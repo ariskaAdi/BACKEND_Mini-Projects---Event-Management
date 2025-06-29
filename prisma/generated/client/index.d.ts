@@ -1615,6 +1615,7 @@ export namespace Prisma {
     points: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    bio: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1629,6 +1630,7 @@ export namespace Prisma {
     points: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    bio: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1643,6 +1645,7 @@ export namespace Prisma {
     points: number
     createdAt: number
     updatedAt: number
+    bio: number
     _all: number
   }
 
@@ -1669,6 +1672,7 @@ export namespace Prisma {
     points?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1683,6 +1687,7 @@ export namespace Prisma {
     points?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1697,6 +1702,7 @@ export namespace Prisma {
     points?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
     _all?: true
   }
 
@@ -1798,6 +1804,7 @@ export namespace Prisma {
     points: number
     createdAt: Date
     updatedAt: Date
+    bio: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1831,6 +1838,7 @@ export namespace Prisma {
     points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
     transactions?: boolean | User$transactionsArgs<ExtArgs>
     events?: boolean | User$eventsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
@@ -1851,6 +1859,7 @@ export namespace Prisma {
     points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1865,6 +1874,7 @@ export namespace Prisma {
     points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1879,9 +1889,10 @@ export namespace Prisma {
     points?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "profilePicture" | "referralCode" | "referredBy" | "points" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "profilePicture" | "referralCode" | "referredBy" | "points" | "createdAt" | "updatedAt" | "bio", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactions?: boolean | User$transactionsArgs<ExtArgs>
     events?: boolean | User$eventsArgs<ExtArgs>
@@ -1914,6 +1925,7 @@ export namespace Prisma {
       points: number
       createdAt: Date
       updatedAt: Date
+      bio: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2353,6 +2365,7 @@ export namespace Prisma {
     readonly points: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly bio: FieldRef<"User", 'String'>
   }
     
 
@@ -9830,7 +9843,8 @@ export namespace Prisma {
     referredBy: 'referredBy',
     points: 'points',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    bio: 'bio'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -10070,6 +10084,7 @@ export namespace Prisma {
     points?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    bio?: StringNullableFilter<"User"> | string | null
     transactions?: TransactionListRelationFilter
     events?: EventListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -10089,6 +10104,7 @@ export namespace Prisma {
     points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
     transactions?: TransactionOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
@@ -10111,6 +10127,7 @@ export namespace Prisma {
     points?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    bio?: StringNullableFilter<"User"> | string | null
     transactions?: TransactionListRelationFilter
     events?: EventListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -10130,6 +10147,7 @@ export namespace Prisma {
     points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -10152,6 +10170,7 @@ export namespace Prisma {
     points?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type EventWhereInput = {
@@ -10602,6 +10621,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
     events?: EventCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -10621,6 +10641,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -10639,6 +10660,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -10658,6 +10680,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -10677,6 +10700,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -10690,6 +10714,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -10704,6 +10729,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EventCreateInput = {
@@ -11266,6 +11292,7 @@ export namespace Prisma {
     points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -11285,6 +11312,7 @@ export namespace Prisma {
     points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -11299,6 +11327,7 @@ export namespace Prisma {
     points?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -12717,6 +12746,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
@@ -12735,6 +12765,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
@@ -12851,6 +12882,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
@@ -12869,6 +12901,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
@@ -12946,6 +12979,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     events?: EventCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     coupons?: CouponCreateNestedManyWithoutUserInput
@@ -12964,6 +12998,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
@@ -13039,6 +13074,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     events?: EventUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
@@ -13057,6 +13093,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
@@ -13122,6 +13159,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
     events?: EventCreateNestedManyWithoutOrganizerInput
     coupons?: CouponCreateNestedManyWithoutUserInput
@@ -13140,6 +13178,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     coupons?: CouponUncheckedCreateNestedManyWithoutUserInput
@@ -13215,6 +13254,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
     coupons?: CouponUpdateManyWithoutUserNestedInput
@@ -13233,6 +13273,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     coupons?: CouponUncheckedUpdateManyWithoutUserNestedInput
@@ -13388,6 +13429,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
     events?: EventCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -13406,6 +13448,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -13439,6 +13482,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -13457,6 +13501,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -13474,6 +13519,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
     events?: EventCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -13492,6 +13538,7 @@ export namespace Prisma {
     points?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    bio?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -13525,6 +13572,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     events?: EventUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -13543,6 +13591,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput

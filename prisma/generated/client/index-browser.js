@@ -131,7 +131,8 @@ exports.Prisma.UserScalarFieldEnum = {
   referredBy: 'referredBy',
   points: 'points',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  bio: 'bio'
 };
 
 exports.Prisma.EventScalarFieldEnum = {

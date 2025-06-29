@@ -4,7 +4,7 @@ import multer from "multer";
 export const uploaderMemory = () => {
   return multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 1 * 1024 * 1024 },
+    limits: { fileSize: 2 * 1024 * 1024 },
     fileFilter: (req: Request, file: Express.Multer.File, callback) => {
       const allowedExt = /\.(jpeg|jpg|png|gif)$/;
       if (!allowedExt.test(file.originalname.toLowerCase())) {

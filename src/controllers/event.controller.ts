@@ -79,6 +79,15 @@ class EventController {
         orderBy: {
           createdAt: "desc",
         },
+        include: {
+          organizer: {
+            select: {
+              name: true,
+              email: true,
+              profilePicture: true,
+            },
+          },
+        },
       });
       res.status(200).send({ success: true, events });
     } catch (error) {
@@ -123,7 +132,7 @@ class EventController {
       endDate,
       seats,
       picture,
-      organizer,
+      organizerId,
       category,
     } = req.body;
     try {
@@ -150,15 +159,18 @@ class EventController {
           description,
           location,
           price: Number(price),
-          isPaid,
+          isPaid: isPaid === "true",
           startDate: start,
           endDate: end,
-          organizer,
+          organizerId: Number(organizerId),
           seats: Number(seats),
-          picture,
+          picture: uploadImage?.secure_url || "",
           category,
         },
       });
+      console.log("Incoming file:", req.file?.originalname);
+      console.log("Incoming body:", req.body);
+
       res.status(200).send({ success: true, event });
     } catch (error) {
       next(error);
@@ -177,7 +189,7 @@ class EventController {
           id: eventId,
         },
       });
-      res.status(200).send({ success: true, event });
+      res.status(200).send({ success: true, message: "Event deleted" });
     } catch (error) {
       next(error);
     }

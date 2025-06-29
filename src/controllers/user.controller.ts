@@ -17,6 +17,14 @@ class UserController {
         where: {
           id: userId,
         },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          profilePicture: true,
+          bio: true,
+        },
       });
       if (!user) {
         throw { rc: 404, message: "User not found" };
@@ -33,7 +41,7 @@ class UserController {
     next: NextFunction
   ): Promise<void> => {
     const userId = Number(req.params.id);
-    const { name, profilePicture } = req.body;
+    const { name, profilePicture, bio } = req.body;
     try {
       const user = await prisma.user.update({
         where: {
@@ -42,6 +50,7 @@ class UserController {
         data: {
           name,
           profilePicture,
+          bio,
         },
       });
       res.status(200).send({ success: true, user });
