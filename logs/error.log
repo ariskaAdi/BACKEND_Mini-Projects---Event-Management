@@ -330,3 +330,124 @@ D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\user
 Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
 
 Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-07-02 18:32:33 [ERROR]: POST /auth/register Invalid email format {"statusCode":400,"success":false,"message":"Invalid email format"}
+2025-07-02 19:43:49 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:69:41
+
+  66 ): Promise<void> {
+  67   const { category, title, location } = req.query;
+  68   try {
+→ 69     const events = await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-02 20:05:37 [ERROR]: POST /auth/login Invalid email format {"statusCode":400,"success":false,"message":"Invalid email format"}
+2025-07-02 22:25:45 [ERROR]: GET /user/profile/me 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\user.controller.ts:16:38
+
+  13 ): Promise<void> {
+  14   const userId = Number(req.params.id);
+  15   try {
+→ 16     const user = await prisma.user.findUnique({
+           where: {
+         +   id: Int
+           },
+           select: {
+             id: true,
+             name: true,
+             email: true,
+             role: true,
+             profilePicture: true,
+             bio: true
+           }
+         })
+
+Argument `id` is missing. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-02 22:27:33 [ERROR]: GET /user/profile/get/me 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\user.controller.ts:128:38
+
+  125 ): Promise<void> => {
+  126   try {
+  127     const userId = (req as any).user.userId;
+→ 128     const user = await prisma.user.findUnique({
+            where: {
+              id: undefined,
+          ?   email?: String,
+          ?   referralCode?: String,
+          ?   AND?: UserWhereInput | UserWhereInput[],
+          ?   OR?: UserWhereInput[],
+          ?   NOT?: UserWhereInput | UserWhereInput[],
+          ?   name?: StringFilter | String,
+          ?   password?: StringFilter | String,
+          ?   role?: EnumRoleFilter | Role,
+          ?   profilePicture?: StringNullableFilter | String | Null,
+          ?   referredBy?: StringNullableFilter | String | Null,
+          ?   points?: IntFilter | Int,
+          ?   createdAt?: DateTimeFilter | DateTime,
+          ?   updatedAt?: DateTimeFilter | DateTime,
+          ?   bio?: StringNullableFilter | String | Null,
+          ?   transactions?: TransactionListRelationFilter,
+          ?   events?: EventListRelationFilter,
+          ?   reviews?: ReviewListRelationFilter,
+          ?   coupons?: CouponListRelationFilter,
+          ?   pointHistories?: PointHistoryListRelationFilter
+            },
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              role: true,
+              profilePicture: true,
+              bio: true
+            }
+          })
+
+Argument `where` of type UserWhereUniqueInput needs at least one of `id`, `email` or `referralCode` arguments. Available options are marked with ?. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-02 22:29:22 [ERROR]: GET /user/profile/get/me Cannot read properties of undefined (reading 'userId') {}
+2025-07-02 22:29:37 [ERROR]: GET /user/profile/get/me Cannot read properties of undefined (reading 'userId') {}
+2025-07-02 22:31:16 [ERROR]: GET /user/profile/get/me Cannot read properties of undefined (reading 'userId') {}
+2025-07-02 22:32:06 [ERROR]: GET /user/profile/get/me Cannot read properties of undefined (reading 'userId') {}
+2025-07-02 22:35:22 [ERROR]: GET /user/profile/get/me 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\user.controller.ts:130:38
+
+  127 try {
+  128   const userId = res.locals.decrypt.userId;
+  129   console.log("userId from token:", userId);
+→ 130   const user = await prisma.user.findUnique({
+          where: {
+            id: undefined,
+        ?   email?: String,
+        ?   referralCode?: String,
+        ?   AND?: UserWhereInput | UserWhereInput[],
+        ?   OR?: UserWhereInput[],
+        ?   NOT?: UserWhereInput | UserWhereInput[],
+        ?   name?: StringFilter | String,
+        ?   password?: StringFilter | String,
+        ?   role?: EnumRoleFilter | Role,
+        ?   profilePicture?: StringNullableFilter | String | Null,
+        ?   referredBy?: StringNullableFilter | String | Null,
+        ?   points?: IntFilter | Int,
+        ?   createdAt?: DateTimeFilter | DateTime,
+        ?   updatedAt?: DateTimeFilter | DateTime,
+        ?   bio?: StringNullableFilter | String | Null,
+        ?   transactions?: TransactionListRelationFilter,
+        ?   events?: EventListRelationFilter,
+        ?   reviews?: ReviewListRelationFilter,
+        ?   coupons?: CouponListRelationFilter,
+        ?   pointHistories?: PointHistoryListRelationFilter
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            profilePicture: true,
+            bio: true
+          }
+        })
+
+Argument `where` of type UserWhereUniqueInput needs at least one of `id`, `email` or `referralCode` arguments. Available options are marked with ?. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}

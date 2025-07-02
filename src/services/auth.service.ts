@@ -48,7 +48,8 @@ export const registerService = async (data: any) => {
     subject: "Account Created",
     html: `<h1>Thank you for registering ${newUser.name}</h1>`,
   });
-  return newUser;
+  const { password: _, ...userWithoutPassword } = newUser;
+  return userWithoutPassword;
 };
 
 export const loginService = async (data: any) => {
@@ -64,7 +65,7 @@ export const loginService = async (data: any) => {
 
   const token = sign(
     {
-      id: user.id,
+      userId: user.id,
       role: user.role,
     },
     process.env.TOKEN_KEY || "secret",
@@ -72,8 +73,10 @@ export const loginService = async (data: any) => {
       expiresIn: "24h",
     }
   );
+
+  const { password: _, ...userWithoutPassword } = user;
   return {
-    user,
+    user: userWithoutPassword,
     token,
   };
 };

@@ -4,6 +4,7 @@ import e from "cors";
 import { compare } from "bcrypt";
 import { hashPassword } from "../utils/hash";
 import { Role } from "../../prisma/generated/client";
+import AppError from "../errors/AppError";
 
 class UserController {
   public async getProfile(
@@ -113,6 +114,41 @@ class UserController {
         },
       });
       res.status(200).send({ success: true, user });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getMe = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = res.locals.decrypt.userId;
+      console.log("userId from token:", userId);
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          profilePicture: true,
+          bio: true,
+        },
+      });
+
+      if (!user) {
+        throw new AppError("User not found", 404);
+      }
+
+      res.status(200).send({
+        success: true,
+        user,
+      });
     } catch (error) {
       next(error);
     }

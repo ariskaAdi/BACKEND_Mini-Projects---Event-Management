@@ -1,5 +1,6 @@
 import { Router } from "express";
 import UserController from "../controllers/user.controller";
+import { verifyToken } from "../middleware/verifyToken";
 
 class UserRouter {
   private route: Router;
@@ -19,6 +20,7 @@ class UserRouter {
       this.userController.changePassword
     );
     this.route.put("/upgrade-role/:id", this.userController.upgradeToOrganizer);
+    this.route.get("/profile/get/me", verifyToken, this.userController.getMe);
   }
 
   public getRouter(): Router {

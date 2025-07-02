@@ -10,20 +10,14 @@ export const verifyToken = (
 ) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
-    logger.info(token);
     if (!token) {
-      throw new AppError("Token not found", 404);
+      throw new AppError("Token not found", 401);
     }
-    const checkToken = verify(token, process.env.TOKEN_KEY || "secret");
-    console.log(checkToken);
 
-    res.locals.decrpit = checkToken;
+    const decoded = verify(token, process.env.TOKEN_KEY || "secret");
+    res.locals.decrypt = decoded; // <-- ini penting
     next();
-  } catch (error: any) {
-    if (error instanceof AppError) {
-      next(error);
-    } else {
-      res.status(401).send(error);
-    }
+  } catch (error) {
+    next(new AppError("Unauthorized", 401));
   }
 };
