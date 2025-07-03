@@ -115,9 +115,9 @@ export class TransactionController {
     }
   };
 
-  //   update transation jika ada pembayaran
+  //   update transation jika ada pembayaran untuk user
 
-  public updateTransaction = async (
+  public updateTransactionForUser = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -126,16 +126,69 @@ export class TransactionController {
     const { status, paymentProof } = req.body;
 
     try {
-      const transaction = await prisma.transaction.update({
+      const existing = await prisma.transaction.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!existing) {
+        throw new AppError("Transaction not found", 404);
+      }
+
+      const allowedStatus = [
+        "WAITING_CONFIRMATION",
+        "DONE",
+        "REJECTED",
+        "CANCELED",
+      ];
+
+      if (status && !allowedStatus.includes(status)) {
+        throw new AppError("Invalid status", 400);
+      }
+
+      const updated = await prisma.transaction.update({
+        where: {
+          id,
+        },
+        data: {
+          status: status || undefined,
+          paymentProof: paymentProof || undefined,
+        },
+      });
+      res.status(200).send({ success: true, updated });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //   UPDATE TRANSAKSI UNTUK ADMIN
+  public updateTransactionForAdmin = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const id = Number(req.params.id);
+      const action = req.body;
+
+      if (!["done", "rejected"].includes(action)) {
+        throw new AppError("Invalid action", 400);
+      }
+
+      const status = action === "done" ? "DONE" : "REJECTED";
+
+      await prisma.transaction.update({
         where: {
           id,
         },
         data: {
           status,
-          paymentProof,
         },
       });
-      res.status(200).send({ success: true, transaction });
+      res
+        .status(200)
+        .send({ success: true, message: `Transaction marked as ${status}` });
     } catch (error) {
       next(error);
     }
