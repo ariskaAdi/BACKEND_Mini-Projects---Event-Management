@@ -64,10 +64,10 @@ model Event {
   id          Int           @id @default(autoincrement())
   title       String
   description String
-  picture     String? // ✅ Gambar Event
-  category    EventCategory // ✅ Enum kategori event
+  picture     String?
+  category    EventCategory
   location    String
-  price       Int // dalam IDR
+  price       Int
   isPaid      Boolean
   startDate   DateTime
   endDate     DateTime
@@ -89,7 +89,7 @@ model Transaction {
   status       TransactionStatus
   paymentProof String?
   quantity     Int
-  totalPaid    Int // harga final
+  totalPaid    Int
   expiredAt    DateTime
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
@@ -113,7 +113,7 @@ model Review {
 model Voucher {
   id        Int      @id @default(autoincrement())
   code      String   @unique
-  discount  Int // dalam IDR
+  discount  Int
   eventId   Int
   startDate DateTime
   endDate   DateTime
@@ -125,7 +125,7 @@ model Coupon {
   id        Int      @id @default(autoincrement())
   userId    Int
   code      String   @unique
-  discount  Int // dalam IDR
+  discount  Int
   expiresAt DateTime
 
   user User @relation(fields: [userId], references: [id])

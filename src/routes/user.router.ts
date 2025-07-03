@@ -13,14 +13,13 @@ class UserRouter {
   }
 
   private initializeRoutes(): void {
-    this.route.get("/profile/:id", this.userController.getProfile);
+    this.route.get("/profile/get/me", verifyToken, this.userController.getMe);
     this.route.patch("/profile/:id", this.userController.updateProfile);
     this.route.patch(
       "/change-password/:id",
       this.userController.changePassword
     );
     this.route.put("/upgrade-role/:id", this.userController.upgradeToOrganizer);
-    this.route.get("/profile/get/me", verifyToken, this.userController.getMe);
   }
 
   public getRouter(): Router {

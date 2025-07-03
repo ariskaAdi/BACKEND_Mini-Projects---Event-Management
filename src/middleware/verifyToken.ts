@@ -15,7 +15,7 @@ export const verifyToken = (
     }
 
     const decoded = verify(token, process.env.TOKEN_KEY || "secret");
-    res.locals.decrypt = decoded; // <-- ini penting
+    res.locals.decrypt = decoded;
     next();
   } catch (error) {
     next(new AppError("Unauthorized", 401));

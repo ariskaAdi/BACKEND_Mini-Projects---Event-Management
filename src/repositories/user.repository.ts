@@ -28,3 +28,18 @@ export const CreateUser = async (data: CreateUser) => {
     data,
   });
 };
+
+export const findUserById = async (id: number) => {
+  return prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      profilePicture: true,
+      bio: true,
+      points: true,
+    },
+  });
+};
