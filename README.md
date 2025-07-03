@@ -104,5 +104,3 @@ Create a simple and functional event management platform that allows:
 - [ ] Create unit tests for each major flow.
 
 ---
-
-📁 File ini bisa kamu simpan sebagai `README.md` atau `TODO.md` untuk tracking progress selama pengembangan proyek. Kalau mau dibagi jadi per role (dev backend/frontend), bisa aku bantu juga. Mau?
