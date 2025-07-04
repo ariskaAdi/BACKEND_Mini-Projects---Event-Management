@@ -3,6 +3,13 @@ import logger from "../utils/logger";
 import AppError from "../errors/AppError";
 import { verify } from "jsonwebtoken";
 
+type JwtPayload = {
+  userid: number;
+  email: string;
+  iat: number;
+  exp: number;
+};
+
 export const verifyToken = (
   req: Request,
   res: Response,
@@ -14,7 +21,14 @@ export const verifyToken = (
       throw new AppError("Token not found", 401);
     }
 
-    const decoded = verify(token, process.env.TOKEN_KEY || "secret");
+    const decoded = verify(
+      token,
+      process.env.TOKEN_KEY || "secret"
+    ) as JwtPayload;
+
+    if (!decoded) {
+      throw new AppError("Invalid token", 401);
+    }
     res.locals.decrypt = decoded;
     next();
   } catch (error) {

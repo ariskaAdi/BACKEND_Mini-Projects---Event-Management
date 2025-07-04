@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import AppError from "../errors/AppError";
+import { findTransactionById } from "../repositories/transaction.repository";
+import { cloudinaryUpload } from "../config/cloudinary";
+import e from "cors";
 
 export class TransactionController {
   // get semua transaction
@@ -60,16 +63,22 @@ export class TransactionController {
   };
 
   // membuat transaction
-  public createTransaction = async (
+  public createdTransaction = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    const { userId, eventId, quantity, totalPaid } = req.body;
+    const { eventId, quantity, totalPaid } = req.body;
     try {
+      const userId = res.locals.decrypt.userId;
       const event = await prisma.event.findUnique({
         where: {
           id: Number(eventId),
+        },
+        select: {
+          id: true,
+          seats: true,
+          price: true,
         },
       });
 
@@ -81,6 +90,11 @@ export class TransactionController {
         throw new AppError("Not enough seats", 400);
       }
 
+      const expectedTotalPaid = event.price * quantity;
+      if (expectedTotalPaid !== Number(totalPaid)) {
+        throw new AppError("Invalid total paid", 400);
+      }
+
       const expiredAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
 
       const transaction = await prisma.$transaction(async (tx) => {
@@ -90,7 +104,7 @@ export class TransactionController {
             userId: Number(userId),
             eventId: Number(eventId),
             quantity: Number(quantity),
-            totalPaid: Number(totalPaid),
+            totalPaid: expectedTotalPaid,
             expiredAt,
             status: "WAITING_PAYMENT",
           },
@@ -122,41 +136,44 @@ export class TransactionController {
     res: Response,
     next: NextFunction
   ) => {
-    const id = Number(req.params.id);
-    const { status, paymentProof } = req.body;
-
     try {
-      const existing = await prisma.transaction.findUnique({
-        where: {
-          id,
-        },
-      });
+      const { id } = req.params;
+      const userId = res.locals.decrypt.userId as number | undefined;
 
-      if (!existing) {
+      const transaction = await findTransactionById(Number(id));
+      if (!transaction) {
         throw new AppError("Transaction not found", 404);
       }
 
-      const allowedStatus = [
-        "WAITING_CONFIRMATION",
-        "DONE",
-        "REJECTED",
-        "CANCELED",
-      ];
-
-      if (status && !allowedStatus.includes(status)) {
-        throw new AppError("Invalid status", 400);
+      if (transaction.userId !== userId) {
+        throw new AppError("Unauthorized access", 403);
       }
 
-      const updated = await prisma.transaction.update({
+      let paymentProof = "";
+      if (req.file) {
+        const uploaded = await cloudinaryUpload(req.file);
+        paymentProof = uploaded.secure_url;
+      }
+
+      const newStatus = paymentProof
+        ? "WAITING_CONFIRMATION"
+        : "WAITING_PAYMENT";
+
+      await prisma.transaction.update({
         where: {
-          id,
+          id: Number(id),
         },
         data: {
-          status: status || undefined,
-          paymentProof: paymentProof || undefined,
+          paymentProof: paymentProof,
+          status: newStatus,
         },
       });
-      res.status(200).send({ success: true, updated });
+      console.log("DECRYPTED JWT PAYLOAD:", res.locals.decrypt.userId);
+
+      res.status(200).send({
+        success: true,
+        message: "proof updated. wait for admin confirmation",
+      });
     } catch (error) {
       next(error);
     }

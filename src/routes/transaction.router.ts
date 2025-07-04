@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { TransactionController } from "../controllers/transaction.controller";
+import { verifyToken } from "../middleware/verifyToken";
+import { uploaderMemory } from "../middleware/uploader";
 
 class TransactionRouter {
   private route: Router;
@@ -14,9 +16,15 @@ class TransactionRouter {
   private initializeRoutes(): void {
     this.route.get("/", this.transactionController.getAll);
     this.route.get("/:id", this.transactionController.getById);
-    this.route.post("/", this.transactionController.createTransaction);
+    this.route.post(
+      "/",
+      verifyToken,
+      this.transactionController.createdTransaction
+    );
     this.route.patch(
       "/:id",
+      verifyToken,
+      uploaderMemory().single("paymentProof"),
       this.transactionController.updateTransactionForUser
     );
     this.route.patch(

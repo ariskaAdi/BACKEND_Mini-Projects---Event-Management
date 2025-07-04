@@ -451,3 +451,50 @@ D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\user.
         })
 
 Argument `where` of type UserWhereUniqueInput needs at least one of `id`, `email` or `referralCode` arguments. Available options are marked with ?. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-04 20:55:33 [ERROR]: POST /auth/login 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\user.repository.ts:5:22
+
+  2 import { prisma } from "../config/prisma";
+  3 
+  4 export const findUserByEmail = async (email: string) => {
+→ 5   return prisma.user.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-07-04 20:59:20 [ERROR]: POST /transaction Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 20:59:39 [ERROR]: POST /transaction Invalid total paid {"statusCode":400,"success":false,"message":"Invalid total paid"}
+2025-07-04 21:23:36 [ERROR]: PATCH /transaction/2 
+Invalid `prisma.transaction.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\transaction.repository.ts:4:29
+
+  1 import { prisma } from "../config/prisma";
+  2 
+  3 export const findTransactionById = async (id: number) => {
+→ 4   return prisma.transaction.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-07-04 21:24:04 [ERROR]: PATCH /transaction/2 
+Invalid `prisma.transaction.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\transaction.repository.ts:4:29
+
+  1 import { prisma } from "../config/prisma";
+  2 
+  3 export const findTransactionById = async (id: number) => {
+→ 4   return prisma.transaction.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-07-04 21:24:26 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:25:16 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:28:49 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:29:58 [ERROR]: PATCH /transaction/2 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"paymentProof","storageErrors":[]}
+2025-07-04 21:31:04 [ERROR]: PATCH /transaction/2 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"paymentProof","storageErrors":[]}
+2025-07-04 21:32:59 [ERROR]: PATCH /transaction/2 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"paymentProof","storageErrors":[]}
+2025-07-04 21:34:01 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:39:03 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:46:33 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:48:53 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:52:13 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 21:52:49 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
