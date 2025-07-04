@@ -498,3 +498,13 @@ Please make sure your database server is running at `aws-0-us-west-1.pooler.supa
 2025-07-04 21:48:53 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
 2025-07-04 21:52:13 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
 2025-07-04 21:52:49 [ERROR]: PATCH /transaction/2 Unauthorized access {"statusCode":403,"success":false,"message":"Unauthorized access"}
+2025-07-04 23:10:54 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:10:54 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:11:12 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:11:12 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:45:49 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:45:49 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:50:03 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-04 23:50:03 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-05 00:14:48 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-05 00:14:48 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}

@@ -106,6 +106,28 @@ class EventController {
         where: {
           id: eventId,
         },
+        select: {
+          organizer: {
+            select: {
+              name: true,
+              email: true,
+              profilePicture: true,
+              bio: true,
+              role: true,
+            },
+          },
+          id: true,
+          title: true,
+          description: true,
+          location: true,
+          price: true,
+          isPaid: true,
+          startDate: true,
+          endDate: true,
+          seats: true,
+          picture: true,
+          category: true,
+        },
       });
       if (!event) {
         throw { rc: 404, message: "Event not found" };
