@@ -5,5 +5,8 @@ export const findTransactionById = async (id: number) => {
     where: {
       id,
     },
+    include: {
+      event: true,
+    },
   });
 };

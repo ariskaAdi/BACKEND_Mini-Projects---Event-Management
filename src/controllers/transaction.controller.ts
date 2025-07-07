@@ -3,19 +3,60 @@ import { prisma } from "../config/prisma";
 import AppError from "../errors/AppError";
 import { findTransactionById } from "../repositories/transaction.repository";
 import { cloudinaryUpload } from "../config/cloudinary";
-import e from "cors";
+import { TransactionStatus } from "../../prisma/generated/client";
 
 export class TransactionController {
   // get semua transaction
   public getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const transaction = await prisma.transaction.findMany({
-        include: {
-          user: true,
-          event: true,
-        },
-      });
-      res.status(200).send({ success: true, transaction });
+      const userId = res.locals.decrypt.userId;
+      const role = res.locals.decrypt.role;
+
+      if (!userId && !role) {
+        throw new AppError("unauthorized access", 400);
+      }
+
+      // pengecekan akses untuk masing-masing role
+      let transactions;
+      if (role === "CUSTOMER") {
+        transactions = await prisma.transaction.findMany({
+          where: {
+            userId,
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                name: true,
+              },
+            },
+            event: true,
+          },
+        });
+      } else if (role === "ORGANIZER") {
+        transactions = await prisma.transaction.findMany({
+          where: {
+            event: {
+              organizerId: userId,
+            },
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                name: true,
+                profilePicture: true,
+              },
+            },
+            event: true,
+          },
+        });
+      } else {
+        throw new AppError("invalid role", 400);
+      }
+      res.status(200).send({ success: true, transactions });
     } catch (error) {
       next(error);
     }
@@ -25,6 +66,13 @@ export class TransactionController {
   public getById = async (req: Request, res: Response, next: NextFunction) => {
     const id = Number(req.params.id);
     try {
+      // pengecekan user dari token
+      const userId = res.locals.decrypt.userId;
+
+      if (!userId) {
+        throw new AppError("User not found", 404);
+      }
+
       let transaction = await prisma.transaction.findUnique({
         where: {
           id,
@@ -38,6 +86,14 @@ export class TransactionController {
         throw new AppError("Transaction not found", 404);
       }
 
+      // pengecekan hanya user yang membuat transaksi dan organizer yang membuat event yang dapat mengakses
+      if (
+        transaction.userId !== userId &&
+        transaction.event.organizerId !== userId
+      ) {
+        throw new AppError("Forbidden", 403);
+      }
+      // pengecekan status transaksi jika melibihkan waktu expired maka satus dan seats akan berubah
       const now = new Date();
       if (
         transaction.status === "WAITING_PAYMENT" &&
@@ -49,6 +105,13 @@ export class TransactionController {
           },
           data: {
             status: "EXPIRED",
+            event: {
+              update: {
+                seats: {
+                  increment: transaction.quantity,
+                },
+              },
+            },
           },
           include: {
             user: true,
@@ -57,6 +120,42 @@ export class TransactionController {
         });
       }
       res.status(200).send({ success: true, transaction });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // get transaction by status
+  public getByStatus = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const status = req.params.status.toUpperCase() as TransactionStatus;
+
+    try {
+      const userId = res.locals.decrypt.userId;
+
+      if (!userId) {
+        throw new AppError("User not found", 404);
+      }
+
+      const allowedStatuses: TransactionStatus[] = ["WAITING_PAYMENT"];
+      if (!allowedStatuses.includes(status)) {
+        throw new AppError("Invalid transaction status", 400);
+      }
+
+      const transactions = await prisma.transaction.findMany({
+        where: {
+          userId,
+          status,
+        },
+        include: {
+          user: true,
+          event: true,
+        },
+      });
+      res.status(200).send({ success: true, transactions });
     } catch (error) {
       next(error);
     }
@@ -95,7 +194,7 @@ export class TransactionController {
         throw new AppError("Invalid total paid", 400);
       }
 
-      const expiredAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
+      const expiredAt = new Date(Date.now() + 2 * 60 * 1000);
 
       const transaction = await prisma.$transaction(async (tx) => {
         // buat transaksi baru
@@ -138,7 +237,7 @@ export class TransactionController {
   ) => {
     try {
       const { id } = req.params;
-      const userId = res.locals.decrypt.userId as number | undefined;
+      const userId = res.locals.decrypt.userId;
 
       const transaction = await findTransactionById(Number(id));
       if (!transaction) {
@@ -186,16 +285,28 @@ export class TransactionController {
     next: NextFunction
   ) => {
     try {
+      const userId = res.locals.decrypt.userId;
       const id = Number(req.params.id);
-      const action = req.body;
+      const action = req.body.action;
 
       if (!["done", "rejected"].includes(action)) {
         throw new AppError("Invalid action", 400);
       }
+      const existingTransaction = await findTransactionById(id);
+
+      if (!existingTransaction) {
+        throw new AppError("Transaction not found", 404);
+      }
+
+      // pengecekan yang boleh hanya organizer id dari token yang boleh melakukan update ini
+
+      if (existingTransaction.event.organizerId !== userId) {
+        throw new AppError("Unauthorized access", 403);
+      }
 
       const status = action === "done" ? "DONE" : "REJECTED";
 
-      await prisma.transaction.update({
+      const updatedTransaction = await prisma.transaction.update({
         where: {
           id,
         },
@@ -203,28 +314,12 @@ export class TransactionController {
           status,
         },
       });
-      res
-        .status(200)
-        .send({ success: true, message: `Transaction marked as ${status}` });
-    } catch (error) {
-      next(error);
-    }
-  };
 
-  //   delete transaction
-  public deleteTransaction = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const id = Number(req.params.id);
-    try {
-      const transaction = await prisma.transaction.delete({
-        where: {
-          id,
-        },
+      res.status(200).send({
+        success: true,
+        message: `Transaction marked as ${status}`,
+        transaction: updatedTransaction,
       });
-      res.status(200).send({ success: true, transaction });
     } catch (error) {
       next(error);
     }

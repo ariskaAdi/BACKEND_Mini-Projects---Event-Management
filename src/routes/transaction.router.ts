@@ -14,8 +14,8 @@ class TransactionRouter {
   }
 
   private initializeRoutes(): void {
-    this.route.get("/", this.transactionController.getAll);
-    this.route.get("/:id", this.transactionController.getById);
+    this.route.get("/", verifyToken, this.transactionController.getAll);
+    this.route.get("/:id", verifyToken, this.transactionController.getById);
     this.route.post(
       "/",
       verifyToken,
@@ -29,9 +29,9 @@ class TransactionRouter {
     );
     this.route.patch(
       "/admin/:id",
+      verifyToken,
       this.transactionController.updateTransactionForAdmin
     );
-    this.route.delete("/:id", this.transactionController.deleteTransaction);
   }
   public getRouter(): Router {
     return this.route;

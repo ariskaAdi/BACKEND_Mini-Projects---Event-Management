@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import logger from "../utils/logger";
 import AppError from "../errors/AppError";
 import { verify } from "jsonwebtoken";
 
 type JwtPayload = {
   userid: number;
   email: string;
+  role: string;
   iat: number;
   exp: number;
 };

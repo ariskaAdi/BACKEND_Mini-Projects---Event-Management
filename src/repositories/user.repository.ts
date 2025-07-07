@@ -43,3 +43,19 @@ export const findUserById = async (id: number) => {
     },
   });
 };
+
+export const findUserByIdToUpdatePassword = async (id: number) => {
+  return prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      profilePicture: true,
+      bio: true,
+      points: true,
+      password: true,
+    },
+  });
+};

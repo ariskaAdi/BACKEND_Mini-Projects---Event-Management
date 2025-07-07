@@ -13,12 +13,13 @@ class UserController {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const userId = Number(req.params.id);
     const { name, profilePicture, bio } = req.body;
     try {
+      const userId = res.locals.decrypt.userId;
+      const exitingUser = await getUserById(userId);
       const user = await prisma.user.update({
         where: {
-          id: userId,
+          id: exitingUser.id,
         },
         data: {
           name,
@@ -37,20 +38,14 @@ class UserController {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const userId = Number(req.params.id);
-    const { oldPassword, newPassword } = req.body;
     try {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-      if (!user) {
-        throw { rc: 404, message: "User not found" };
-      }
-      const comparePassword = await compare(oldPassword, user.password);
+      const userId = res.locals.decrypt.userId;
+      const exitingUser = await getUserById(userId);
+      const { oldPassword, newPassword } = req.body;
+
+      const comparePassword = await compare(oldPassword, exitingUser.password);
       if (!comparePassword) {
-        throw { rc: 401, message: "Password is wrong" };
+        throw new AppError("Invalid password", 401);
       }
 
       const hash = await hashPassword(newPassword);
@@ -75,11 +70,13 @@ class UserController {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const userId = Number(req.params.id);
     try {
+      const userId = res.locals.decrypt.userId;
+      const exitingUser = await getUserById(userId);
+
       const user = await prisma.user.update({
         where: {
-          id: userId,
+          id: exitingUser.id,
         },
         data: {
           role: Role.ORGANIZER,

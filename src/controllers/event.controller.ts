@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import { EventCategory } from "../../prisma/generated/client";
 import { cloudinaryUpload } from "../config/cloudinary";
+import AppError from "../errors/AppError";
 
 class EventController {
   public async createEvent(
@@ -9,7 +10,6 @@ class EventController {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const organizerId = Number(req.body.organizerId);
     const {
       title,
       description,
@@ -19,19 +19,53 @@ class EventController {
       startDate,
       endDate,
       seats,
-      picture,
       category,
     } = req.body;
     try {
+      // untuk mengambil request berdasarkan role dari jwt
+      const organizerId = Number(req.body.organizerId);
+      const userId = res.locals.decrypt.userId;
+      const userRole = res.locals.decrypt.role;
+
+      if (isNaN(organizerId)) {
+        throw new AppError("Invalid organizer ID", 400);
+      }
+
+      if (userId !== organizerId && userRole !== "ORGANIZER") {
+        throw new AppError(
+          "Unauthorized: Only the organizer can create their own events",
+          401
+        );
+      }
+
+      // meenentukan jadwal dari event itu sendiri
       const start = new Date(startDate);
       const end = new Date(endDate);
 
+      // pengecekan dari waktu yang diinput harus number
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        throw new AppError("Invalid date format", 400);
+      }
+
       if (end <= start) {
-        throw { rc: 400, message: "End date must be after start date" };
+        throw new AppError("End date must be after start date", 400);
       }
 
       if (start < new Date()) {
-        throw { rc: 400, message: "Start date must be in the future" };
+        throw new AppError("Start date must be in the future", 400);
+      }
+
+      // pengecekan jumlah bangku dan harga
+
+      const parsedSeats = Number(seats);
+      const parsedPrice = Number(price);
+
+      if (isNaN(parsedSeats) || parsedSeats < 1) {
+        throw new AppError("Seats must be a valid number >= 1", 400);
+      }
+
+      if (isNaN(parsedPrice) || parsedPrice < 0) {
+        throw new AppError("Price must be a valid non-negative number", 400);
       }
 
       let uploadImage = null;
@@ -43,12 +77,12 @@ class EventController {
           title,
           description,
           location,
-          price: Number(price),
-          isPaid: isPaid === "true",
+          price: parsedPrice,
+          isPaid: isPaid === "true" || isPaid === true,
           startDate: start,
           endDate: end,
           organizerId: Number(organizerId),
-          seats: Number(seats),
+          seats: parsedSeats,
           picture: uploadImage?.secure_url || "",
           category,
         },
@@ -153,21 +187,57 @@ class EventController {
       startDate,
       endDate,
       seats,
-      picture,
-      organizerId,
       category,
     } = req.body;
     try {
+      const userId = res.locals.decrypt.userId;
+      const userRole = res.locals.decrypt.role;
+
+      // mengabil event terlebih dahulu
+      const existingEvent = await prisma.event.findUnique({
+        where: {
+          id: eventId,
+        },
+      });
+
+      // pengecekan event
+      if (!existingEvent) {
+        throw new AppError("Event not found", 404);
+      }
+
+      // pengecekan role dan organizerId harus sesusai dengan eventId yang telah dibuat oleh organizer tsb
+
+      if (existingEvent.organizerId !== userId && userRole !== "ORGANIZER") {
+        throw new AppError(
+          "Unauthorized: You are not the owner of this event",
+          401
+        );
+      }
+      // pengecekan jadwal event
       const start = new Date(startDate);
       const end = new Date(endDate);
 
       if (end <= start) {
-        throw { rc: 400, message: "End date must be after start date" };
+        throw new AppError("End date must be after start date", 400);
       }
 
       if (start < new Date()) {
-        throw { rc: 400, message: "Start date must be in the future" };
+        throw new AppError("Start date must be in the future", 400);
       }
+
+      // pengecekan jumlah bangku dan harga
+
+      const parsedSeats = Number(seats);
+      const parsedPrice = Number(price);
+
+      if (isNaN(parsedSeats) || parsedSeats < 1) {
+        throw new AppError("Seats must be a valid number >= 1", 400);
+      }
+
+      if (isNaN(parsedPrice) || parsedPrice < 0) {
+        throw new AppError("Price must be a valid non-negative number", 400);
+      }
+
       let uploadImage = null;
       if (req.file) {
         uploadImage = await cloudinaryUpload(req.file);
@@ -180,12 +250,12 @@ class EventController {
           title,
           description,
           location,
-          price: Number(price),
-          isPaid: isPaid === "true",
+          price: parsedPrice,
+          isPaid: isPaid === "true" || isPaid === true,
           startDate: start,
           endDate: end,
-          organizerId: Number(organizerId),
-          seats: Number(seats),
+          organizerId: userId,
+          seats: parsedSeats,
           picture: uploadImage?.secure_url || "",
           category,
         },
@@ -206,7 +276,28 @@ class EventController {
   ): Promise<void> {
     const eventId = Number(req.params.id);
     try {
-      const event = await prisma.event.delete({
+      const userId = res.locals.decrypt.userId;
+
+      const existingEvent = await prisma.event.findUnique({
+        where: {
+          id: eventId,
+        },
+      });
+
+      // pengecekan jika event tidak ditemukan
+
+      if (!existingEvent) {
+        throw new AppError("Event not found", 404);
+      }
+      // pengecekan hanya boleh diakses oleh organizer yang membuat event
+      if (existingEvent.organizerId !== userId) {
+        throw new AppError(
+          "Unauthorized: You are not the owner of this event",
+          401
+        );
+      }
+
+      await prisma.event.delete({
         where: {
           id: eventId,
         },
