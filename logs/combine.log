@@ -639,3 +639,19 @@ Please make sure your database server is running at `aws-0-us-west-1.pooler.supa
 2025-07-07 22:11:37 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
 2025-07-07 22:17:11 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
 2025-07-07 22:17:11 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-08 11:47:14 [ERROR]: GET /transaction/status/done Invalid transaction status {"statusCode":400,"success":false,"message":"Invalid transaction status"}
+2025-07-08 14:08:44 [ERROR]: GET /transaction Invalid transaction status {"statusCode":400,"success":false,"message":"Invalid transaction status"}
+2025-07-08 14:10:08 [ERROR]: GET /transaction Cannot read properties of undefined (reading 'toUpperCase') {}
+2025-07-08 17:16:45 [ERROR]: GET /event/9 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\controllers\event.controller.ts:139:40
+
+  136 ): Promise<void> {
+  137   const eventId = Number(req.params.id);
+  138   try {
+→ 139     const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-08 22:20:31 [ERROR]: POST /event Only organizers can access this route {"statusCode":403,"success":false,"message":"Only organizers can access this route"}
+2025-07-08 22:21:47 [ERROR]: DELETE /event/11 Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}

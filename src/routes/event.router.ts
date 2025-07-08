@@ -2,6 +2,7 @@ import { Router } from "express";
 import EventController from "../controllers/event.controller";
 import { uploaderMemory } from "../middleware/uploader";
 import { verifyToken } from "../middleware/verifyToken";
+import { onlyOrganizer } from "../middleware/by-role/organizerMiddleware";
 
 class EventRouter {
   private route: Router;
@@ -19,16 +20,23 @@ class EventRouter {
     this.route.post(
       "/",
       verifyToken,
+      onlyOrganizer,
       uploaderMemory().single("picture"),
       this.eventController.createEvent
     );
     this.route.patch(
       "/:id",
       verifyToken,
+      onlyOrganizer,
       uploaderMemory().single("picture"),
       this.eventController.updateEvent
     );
-    this.route.delete("/:id", verifyToken, this.eventController.deleteEvent);
+    this.route.delete(
+      "/:id",
+      verifyToken,
+      onlyOrganizer,
+      this.eventController.deleteEvent
+    );
   }
 
   public getRouter(): Router {

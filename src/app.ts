@@ -7,6 +7,7 @@ import UserRouter from "./routes/user.router";
 import EventRouter from "./routes/event.router";
 import logger from "./utils/logger";
 import TransactionRouter from "./routes/transaction.router";
+import ReviewRouter from "./routes/review.router";
 
 const PORT: string | number = process.env.PORT || 4000;
 
@@ -29,6 +30,7 @@ class App {
     const userRouter = new UserRouter();
     const eventRouter = new EventRouter();
     const transactionRouter = new TransactionRouter();
+    const reviewRouter = new ReviewRouter();
     this.app.get("/", (req: Request, res: Response) => {
       res.status(200).send("<h1>Welcome to the API</h1>");
     });
@@ -36,6 +38,7 @@ class App {
     this.app.use("/user", userRouter.getRouter());
     this.app.use("/event", eventRouter.getRouter());
     this.app.use("/transaction", transactionRouter.getRouter());
+    this.app.use("/review", reviewRouter.getRouter());
   }
 
   private errorHandler(): void {
