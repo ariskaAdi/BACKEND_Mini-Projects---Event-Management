@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../errors/AppError";
-import { verify } from "jsonwebtoken";
+import { JsonWebTokenError, TokenExpiredError, verify } from "jsonwebtoken";
 
 type JwtPayload = {
   userid: number;
@@ -26,12 +26,15 @@ export const verifyToken = (
       process.env.TOKEN_KEY || "secret"
     ) as JwtPayload;
 
-    if (!decoded) {
-      throw new AppError("Invalid token", 401);
-    }
     res.locals.decrypt = decoded;
     next();
   } catch (error) {
-    next(new AppError("Unauthorized", 401));
+    if (error instanceof TokenExpiredError) {
+      next(new AppError("Token expired", 401));
+    } else if (error instanceof JsonWebTokenError) {
+      next(new AppError("Invalid token", 401));
+    } else {
+      next(new AppError("Unauthorized", 401));
+    }
   }
 };

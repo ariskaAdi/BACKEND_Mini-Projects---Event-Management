@@ -94,10 +94,20 @@ class UserController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const userId = res.locals.decrypt.userId;
+      const decrypt = res.locals.decrypt;
+
+      if (!decrypt || !decrypt.userId) {
+        throw new AppError("Unauthorized access", 401);
+      }
+
+      const userId = decrypt.userId;
       console.log("userId from token:", userId);
+
       const user = await getUserById(userId);
 
+      if (!user) {
+        throw new AppError("User not found", 404);
+      }
       res.status(200).send({
         success: true,
         user,

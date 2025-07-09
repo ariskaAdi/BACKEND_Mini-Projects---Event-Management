@@ -31,7 +31,7 @@ class TransactionRouter {
       this.transactionController.cancelTransaction
     );
     this.route.patch(
-      "/:id",
+      "/payment-proof/:id",
       verifyToken,
       onlyCustomer,
       uploaderMemory().single("paymentProof"),

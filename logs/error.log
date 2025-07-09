@@ -655,3 +655,162 @@ Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
 Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
 2025-07-08 22:20:31 [ERROR]: POST /event Only organizers can access this route {"statusCode":403,"success":false,"message":"Only organizers can access this route"}
 2025-07-08 22:21:47 [ERROR]: DELETE /event/11 Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:48:54 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:48:54 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:49:07 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:49:07 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:49:22 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:49:22 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:51:07 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:51:07 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:54:59 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:54:59 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:56:10 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:56:10 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:58:52 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 18:58:52 [ERROR]: GET /user/profile/get/me Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 19:04:19 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:04:19 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:04:42 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:04:42 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:09:02 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:09:02 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:16:02 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:16:02 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:19:11 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-09 19:24:55 [ERROR]: DELETE /event/10 
+Invalid `prisma.event.delete()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:111:35
+
+  108 };
+  109 
+  110 export const deleteEvent = async (eventId: number) => {
+→ 111   return await prisma.event.delete(
+Foreign key constraint violated on the constraint: `Transaction_eventId_fkey` {"code":"P2003","meta":{"modelName":"Event","constraint":"Transaction_eventId_fkey"},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-09 19:25:51 [ERROR]: DELETE /event/10 
+Invalid `prisma.event.delete()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:111:35
+
+  108 };
+  109 
+  110 export const deleteEvent = async (eventId: number) => {
+→ 111   return await prisma.event.delete(
+Foreign key constraint violated on the constraint: `Transaction_eventId_fkey` {"code":"P2003","meta":{"modelName":"Event","constraint":"Transaction_eventId_fkey"},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-09 19:26:32 [ERROR]: DELETE /event/10 
+Invalid `prisma.event.delete()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:111:35
+
+  108 };
+  109 
+  110 export const deleteEvent = async (eventId: number) => {
+→ 111   return await prisma.event.delete(
+Foreign key constraint violated on the constraint: `Transaction_eventId_fkey` {"code":"P2003","meta":{"modelName":"Event","constraint":"Transaction_eventId_fkey"},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-09 19:36:35 [ERROR]: PATCH /event/10 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture  ","storageErrors":[]}
+2025-07-09 19:37:30 [ERROR]: PATCH /event/10 Unexpected field {"name":"MulterError","message":"Unexpected field","code":"LIMIT_UNEXPECTED_FILE","field":"picture  ","storageErrors":[]}
+2025-07-09 19:38:45 [ERROR]: PATCH /event/10 Seats must be a valid number >= 1 {"statusCode":400,"success":false,"message":"Seats must be a valid number >= 1"}
+2025-07-09 19:39:25 [ERROR]: PATCH /event/10 Price must be a valid non-negative number {"statusCode":400,"success":false,"message":"Price must be a valid non-negative number"}
+2025-07-09 19:39:44 [ERROR]: PATCH /event/10 
+Invalid `prisma.event.update()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:86:29
+
+  83     category: EventCategory;
+  84   }
+  85 ) => {
+→ 86   return await prisma.event.update({
+         where: {
+           id: 10
+         },
+         data: {
+           title: undefined,
+           description: undefined,
+           location: undefined,
+           price: 75000,
+           isPaid: false,
+           startDate: new Date("Invalid Date"),
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+           endDate: new Date("Invalid Date"),
+           seats: 200,
+           picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1752064783/vc7g5letbo9g2ssubpsi.jpg",
+           category: undefined
+         }
+       })
+
+Invalid value for argument `startDate`: Provided Date object is invalid. Expected Date. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-09 19:40:55 [ERROR]: PATCH /event/10 
+Invalid `prisma.event.update()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:86:29
+
+  83     category: EventCategory;
+  84   }
+  85 ) => {
+→ 86   return await prisma.event.update({
+         where: {
+           id: 10
+         },
+         data: {
+           title: undefined,
+           description: undefined,
+           location: undefined,
+           price: 75000,
+           isPaid: false,
+           startDate: new Date("Invalid Date"),
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+           endDate: new Date("Invalid Date"),
+           seats: 200,
+           picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1752064854/dumovolw2ng5dehgbajf.jpg",
+           category: undefined
+         }
+       })
+
+Invalid value for argument `startDate`: Provided Date object is invalid. Expected Date. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-09 19:41:41 [ERROR]: PATCH /event/10 
+Invalid `prisma.event.update()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:86:29
+
+  83     category: EventCategory;
+  84   }
+  85 ) => {
+→ 86   return await prisma.event.update({
+         where: {
+           id: 10
+         },
+         data: {
+           title: undefined,
+           description: undefined,
+           location: undefined,
+           price: 75000,
+           isPaid: false,
+           startDate: new Date("Invalid Date"),
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+           endDate: new Date("Invalid Date"),
+           seats: 200,
+           picture: "https://res.cloudinary.com/dzvpb6m6w/image/upload/v1752064900/i4lcjuzmmwebjdc94bhv.jpg",
+           category: undefined
+         }
+       })
+
+Invalid value for argument `startDate`: Provided Date object is invalid. Expected Date. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-09 20:47:45 [ERROR]: GET /transaction 
+Invalid `prisma.transaction.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\transaction.repository.ts:17:35
+
+  14 };
+  15 
+  16 export const findExpiredTransactions = async (userId: number, role: string) => {
+→ 17   return await prisma.transaction.findMany(
+Server has closed the connection. {"code":"P1017","meta":{"modelName":"Transaction"},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-09 23:05:39 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:40:29
+
+  37   mode: "insensitive" as const,
+  38 });
+  39 
+→ 40 return await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-09 23:38:56 [ERROR]: POST /event Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 23:39:19 [ERROR]: POST /event Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 23:47:37 [ERROR]: POST /event Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-09 23:57:58 [ERROR]: POST /event End date must be after start date {"statusCode":400,"success":false,"message":"End date must be after start date"}

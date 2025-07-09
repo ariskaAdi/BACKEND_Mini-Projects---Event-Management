@@ -39,8 +39,8 @@ export const createEventServices = async (data: CreateEventData) => {
     );
   }
 
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  const start = new Date(startDate ?? "");
+  const end = new Date(endDate ?? "");
 
   if (isNaN(start.getTime()) || isNaN(end.getTime())) {
     throw new AppError("Invalid date format", 400);

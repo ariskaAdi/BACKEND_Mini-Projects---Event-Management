@@ -27,7 +27,8 @@ class EventController {
         userId,
         role: "ORGANIZER",
       });
-
+      console.log("BODY:", req.body);
+      console.log("FILE:", req.file);
       res.status(200).send({ success: true, result });
     } catch (error) {
       next(error);
