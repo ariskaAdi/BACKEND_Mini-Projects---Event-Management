@@ -1,4 +1,4 @@
-import { CreateReviewPayload } from "../../types/review.type";
+import { CreateReviewPayload } from "../types/review.type";
 import { prisma } from "../config/prisma";
 
 export const getAverageRatingByOrganizerId = async (organizerId: number) => {

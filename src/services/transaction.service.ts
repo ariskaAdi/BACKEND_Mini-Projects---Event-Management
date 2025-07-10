@@ -1,5 +1,5 @@
 import { TransactionStatus } from "../../prisma/generated/client";
-import { CreateTransactionInput } from "../../types/transaction.type";
+import { CreateTransactionInput } from "../types/transaction.type";
 import { cloudinaryUpload } from "../config/cloudinary";
 import AppError from "../errors/AppError";
 import {

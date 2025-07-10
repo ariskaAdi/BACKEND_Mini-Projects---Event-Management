@@ -1,5 +1,5 @@
 import { EventCategory } from "../../prisma/generated/client";
-import { CreateEventData, UpdateEventData } from "../../types/event.types";
+import { CreateEventData, UpdateEventData } from "../types/event.types";
 import { cloudinaryUpload } from "../config/cloudinary";
 import AppError from "../errors/AppError";
 import {

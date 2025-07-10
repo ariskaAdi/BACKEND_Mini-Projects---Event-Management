@@ -5,7 +5,7 @@ import {
   getAverageRatingByOrganizerId,
 } from "../repositories/review.repository";
 import AppError from "../errors/AppError";
-import { CreateReviewPayload } from "../../types/review.type";
+import { CreateReviewPayload } from "../types/review.type";
 
 export const getOrganizerRatingService = async (organizerId: number) => {
   if (isNaN(organizerId)) {
