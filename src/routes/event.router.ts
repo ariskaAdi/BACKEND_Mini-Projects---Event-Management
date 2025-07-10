@@ -16,7 +16,14 @@ class EventRouter {
 
   private initializeRoutes(): void {
     this.route.get("/", this.eventController.getAll);
+    this.route.get(
+      "/organizer",
+      verifyToken,
+      onlyOrganizer,
+      this.eventController.getAllByOrganizerId
+    );
     this.route.get("/:id", this.eventController.getById);
+
     this.route.post(
       "/",
       verifyToken,

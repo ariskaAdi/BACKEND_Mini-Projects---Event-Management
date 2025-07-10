@@ -814,3 +814,56 @@ Please make sure your database server is running at `aws-0-us-west-1.pooler.supa
 2025-07-09 23:39:19 [ERROR]: POST /event Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
 2025-07-09 23:47:37 [ERROR]: POST /event Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
 2025-07-09 23:57:58 [ERROR]: POST /event End date must be after start date {"statusCode":400,"success":false,"message":"End date must be after start date"}
+2025-07-10 18:37:47 [ERROR]: GET /event/organizer Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-10 18:45:53 [ERROR]: GET /event/organizer Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-10 18:47:13 [ERROR]: GET /event/organizer Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-10 18:52:54 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:40:29
+
+  37   mode: "insensitive" as const,
+  38 });
+  39 
+→ 40 return await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-10 18:53:09 [ERROR]: GET /event/organizer Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-10 18:53:09 [ERROR]: GET /event/organizer Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-10 18:53:24 [ERROR]: GET /event/organizer Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-10 18:54:24 [ERROR]: GET /user/profile/get/me 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\user.repository.ts:48:22
+
+  45 };
+  46 
+  47 export const findUserByIdToUpdatePassword = async (id: number) => {
+→ 48   return prisma.user.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"User","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-10 18:55:10 [ERROR]: GET /user/profile/get/me 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\user.repository.ts:48:22
+
+  45 };
+  46 
+  47 export const findUserByIdToUpdatePassword = async (id: number) => {
+→ 48   return prisma.user.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"User","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-10 18:55:12 [ERROR]: GET /event/organizer Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-10 18:55:12 [ERROR]: GET /event/organizer Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-10 18:56:50 [ERROR]: GET /event/organizer Unauthorized {"statusCode":401,"success":false,"message":"Unauthorized"}
+2025-07-10 19:02:31 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:40:29
+
+  37   mode: "insensitive" as const,
+  38 });
+  39 
+→ 40 return await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}

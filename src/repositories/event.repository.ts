@@ -58,6 +58,26 @@ export const findAllEvents = async (filters: {
   });
 };
 
+export const findAllEventsByOrganizerId = async (organizerId: number) => {
+  return await prisma.event.findMany({
+    where: {
+      organizerId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      organizer: {
+        select: {
+          name: true,
+          email: true,
+          profilePicture: true,
+        },
+      },
+    },
+  });
+};
+
 export const findEventById = async (id: number) => {
   const event = await prisma.event.findUnique({
     where: {

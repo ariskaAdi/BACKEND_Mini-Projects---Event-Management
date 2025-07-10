@@ -6,6 +6,7 @@ import {
   createEvent,
   deleteEvent,
   findAllEvents,
+  findAllEventsByOrganizerId,
   findEventById,
   updateEventById,
 } from "../repositories/event.repository";
@@ -100,6 +101,16 @@ export const getAllEventsServices = async (filters: {
   location?: string;
 }) => {
   return await findAllEvents(filters);
+};
+
+export const getAllEventByOrganizerServices = async (organizerId: number) => {
+  const events = await findAllEventsByOrganizerId(organizerId);
+
+  if (!events || events.length === 0) {
+    throw new AppError("No events found by this organizer", 404);
+  }
+
+  return events;
 };
 
 export const getEventByIdServices = async (id: number) => {

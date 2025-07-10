@@ -4,6 +4,7 @@ import AppError from "../errors/AppError";
 import {
   createEventServices,
   deleteEventServices,
+  getAllEventByOrganizerServices,
   getAllEventsServices,
   getEventByIdServices,
   updateEventServices,
@@ -54,6 +55,23 @@ class EventController {
         title: title as string,
         location: location as string,
       });
+      res.status(200).send({ success: true, result });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async getAllByOrganizerId(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const userId = res.locals.decrypt.userId;
+
+      if (!userId) throw new AppError("User not found", 404);
+      const result = await getAllEventByOrganizerServices(userId);
+
       res.status(200).send({ success: true, result });
     } catch (error) {
       next(error);
