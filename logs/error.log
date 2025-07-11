@@ -867,3 +867,94 @@ D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\even
 Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
 
 Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-11 20:19:49 [ERROR]: POST /voucher 
+Invalid `tx.event.update()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\voucher.repository.ts:32:20
+
+  29 // membuat persentase harga untuk discount daari voucher
+  30 const percentage = discount / 100;
+  31 const newPrice = Math.max(0, Math.floor(event.price * (1 - percentage)));
+→ 32 await tx.event.update(
+Transaction API error: Transaction not found. Transaction ID is invalid, refers to an old closed transaction Prisma doesn't have information about anymore, or was obtained before disconnecting. {"code":"P2028","meta":{"modelName":"Event","error":"Transaction not found. Transaction ID is invalid, refers to an old closed transaction Prisma doesn't have information about anymore, or was obtained before disconnecting."},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-11 20:26:10 [ERROR]: POST /voucher 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\transaction.repository.ts:84:29
+
+  81 };
+  82 
+  83 export const findEventByIdForTransaction = async (eventId: number) => {
+→ 84   return await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-07-11 20:38:05 [ERROR]: GET /voucher/13 
+Invalid `prisma.voucher.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\voucher.repository.ts:47:40
+
+  44 };
+  45 
+  46 export const findVoucherByEventId = async (eventId: number) => {
+→ 47   const voucher = await prisma.voucher.findMany({
+         where: {
+       +   eventId: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `eventId` is missing. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-11 20:39:55 [ERROR]: GET /voucher/13 
+Invalid `prisma.voucher.findFirst()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\voucher.repository.ts:47:40
+
+  44 };
+  45 
+  46 export const findVoucherByEventId = async (eventId: number) => {
+→ 47   const voucher = await prisma.voucher.findFirst({
+         where: {
+       +   eventId: {
+       +     equals: Int | IntFieldRefInput,
+       +     in: Int[] | ListIntFieldRefInput,
+       +     notIn: Int[] | ListIntFieldRefInput,
+       +     lt: Int | IntFieldRefInput,
+       +     lte: Int | IntFieldRefInput,
+       +     gt: Int | IntFieldRefInput,
+       +     gte: Int | IntFieldRefInput,
+       +     not: Int | NestedIntFilter
+       +   }
+         }
+       })
+
+Argument `eventId` is missing. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-11 20:47:07 [ERROR]: GET /voucher/13 Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-11 20:53:38 [ERROR]: GET /voucher/13 Voucher not found {"statusCode":404,"success":false,"message":"Voucher not found"}
+2025-07-11 20:55:42 [ERROR]: GET /voucher/13 Voucher not found {"statusCode":404,"success":false,"message":"Voucher not found"}
+2025-07-11 22:07:09 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:40:29
+
+  37   mode: "insensitive" as const,
+  38 });
+  39 
+→ 40 return await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-11 22:16:15 [ERROR]: GET /event 
+Invalid `prisma.event.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:40:29
+
+  37   mode: "insensitive" as const,
+  38 });
+  39 
+→ 40 return await prisma.event.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
