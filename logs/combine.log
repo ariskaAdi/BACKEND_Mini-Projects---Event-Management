@@ -958,3 +958,17 @@ D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\even
 Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
 
 Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-12 18:25:27 [ERROR]: POST /auth/login 
+Invalid `prisma.user.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\user.repository.ts:5:22
+
+  2 import { prisma } from "../config/prisma";
+  3 
+  4 export const findUserByEmail = async (email: string) => {
+→ 5   return prisma.user.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"clientVersion":"6.10.1","name":"PrismaClientInitializationError"}
+2025-07-12 18:28:22 [ERROR]: POST /transaction Invalid voucher {"statusCode":400,"success":false,"message":"Invalid voucher"}
+2025-07-12 18:30:05 [ERROR]: POST /transaction Voucher not valid at this time {"statusCode":400,"success":false,"message":"Voucher not valid at this time"}
+2025-07-12 18:35:21 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}

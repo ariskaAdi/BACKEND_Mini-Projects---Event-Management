@@ -1,7 +1,11 @@
+import { DiscountType } from "../../prisma/generated/client";
+
 export interface IVoucher {
   eventId: number;
   code: string;
+  discount: number;
   startDate: Date;
   endDate: Date;
-  discount: number;
+  quota: number;
+  discountType?: DiscountType;
 }

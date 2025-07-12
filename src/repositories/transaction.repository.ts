@@ -1,5 +1,6 @@
 import { TransactionStatus } from "../../prisma/generated/client";
 import { prisma } from "../config/prisma";
+import AppError from "../errors/AppError";
 
 export const findTransactionById = async (id: number) => {
   return prisma.transaction.findUnique({
@@ -91,13 +92,23 @@ export const findEventByIdForTransaction = async (eventId: number) => {
   });
 };
 
-export const createTransactionWithSeatUpdate = async (
-  userId: number,
-  eventId: number,
-  quantity: number,
-  totalPaid: number,
-  expiredAt: Date
-) => {
+export const createTransactionWithVoucherAndPoints = async ({
+  userId,
+  eventId,
+  quantity,
+  totalPaid,
+  expiredAt,
+  usedPoints = 0,
+  voucherId = null,
+}: {
+  userId: number;
+  eventId: number;
+  quantity: number;
+  totalPaid: number;
+  expiredAt: Date;
+  usedPoints?: number;
+  voucherId?: number | null;
+}) => {
   return await prisma.$transaction(async (tx) => {
     const transaction = await tx.transaction.create({
       data: {
@@ -106,6 +117,8 @@ export const createTransactionWithSeatUpdate = async (
         quantity,
         totalPaid,
         expiredAt,
+        usedPoints,
+        voucherId,
         status: "WAITING_PAYMENT",
       },
     });
@@ -118,6 +131,36 @@ export const createTransactionWithSeatUpdate = async (
         },
       },
     });
+
+    if (voucherId !== null) {
+      await tx.voucher.update({
+        where: { id: voucherId },
+        data: {
+          used: { increment: 1 },
+        },
+      });
+
+      await tx.voucherUsage.create({
+        data: {
+          userId,
+          voucherId,
+        },
+      });
+    }
+
+    if (usedPoints > 0) {
+      const user = await tx.user.findUnique({ where: { id: userId } });
+      if (!user) throw new AppError("User not found", 404);
+      if (user.points < usedPoints)
+        throw new AppError("Not enough points", 400);
+
+      await tx.user.update({
+        where: { id: userId },
+        data: {
+          points: { decrement: usedPoints },
+        },
+      });
+    }
 
     return transaction;
   });
@@ -180,5 +223,14 @@ export const cancelTransactionAndRollbackSeats = async ({
     });
 
     return updatedTransaction;
+  });
+};
+
+export const findVoucherByCode = async (code: string) => {
+  return await prisma.voucher.findUnique({
+    where: { code },
+    include: {
+      event: true,
+    },
   });
 };

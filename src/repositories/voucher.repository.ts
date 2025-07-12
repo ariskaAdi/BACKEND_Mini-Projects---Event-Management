@@ -1,3 +1,4 @@
+import { DiscountType } from "../../prisma/generated/client";
 import { prisma } from "../config/prisma";
 
 export const createVoucher = async (
@@ -5,7 +6,9 @@ export const createVoucher = async (
   code: string,
   discount: number,
   startDate: Date,
-  endDate: Date
+  endDate: Date,
+  quota: number,
+  discountType: DiscountType = DiscountType.FIXED
 ) => {
   const voucher = await prisma.$transaction(async (tx) => {
     // mengambil event berdasarkan id nya dulu
@@ -16,9 +19,11 @@ export const createVoucher = async (
     if (!event) {
       throw new Error("Event not found");
     }
-    // membuat persentase harga untuk discount daari voucher
-    const percentage = discount / 100;
-    const newPrice = Math.max(0, Math.floor(event.price * (1 - percentage)));
+    const existingCode = await tx.voucher.findUnique({ where: { code } });
+    if (existingCode) {
+      throw new Error("Voucher code already exists");
+    }
+
     // membuat voucher untuk pertama kali
     const newVoucher = await tx.voucher.create({
       data: {
@@ -27,17 +32,11 @@ export const createVoucher = async (
         discount,
         startDate,
         endDate,
+        quota,
+        discountType,
       },
     });
 
-    await tx.event.update({
-      where: {
-        id: eventId,
-      },
-      data: {
-        price: newPrice,
-      },
-    });
     return newVoucher;
   });
   return voucher;
@@ -52,6 +51,16 @@ export const findVoucherByEventId = async (eventId: number) => {
     },
     orderBy: {
       startDate: "desc",
+    },
+  });
+  return voucher;
+};
+
+export const getAllVoucher = async () => {
+  const voucher = await prisma.voucher.findMany({
+    include: {
+      event: true,
+      usages: true,
     },
   });
   return voucher;

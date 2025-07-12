@@ -160,9 +160,11 @@ exports.Prisma.TransactionScalarFieldEnum = {
   paymentProof: 'paymentProof',
   quantity: 'quantity',
   totalPaid: 'totalPaid',
+  usedPoints: 'usedPoints',
   expiredAt: 'expiredAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  voucherId: 'voucherId'
 };
 
 exports.Prisma.ReviewScalarFieldEnum = {
@@ -178,9 +180,19 @@ exports.Prisma.VoucherScalarFieldEnum = {
   id: 'id',
   code: 'code',
   discount: 'discount',
-  eventId: 'eventId',
+  discountType: 'discountType',
+  quota: 'quota',
+  used: 'used',
   startDate: 'startDate',
-  endDate: 'endDate'
+  endDate: 'endDate',
+  eventId: 'eventId'
+};
+
+exports.Prisma.VoucherUsageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  voucherId: 'voucherId',
+  usedAt: 'usedAt'
 };
 
 exports.Prisma.CouponScalarFieldEnum = {
@@ -238,12 +250,18 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   CANCELED: 'CANCELED'
 };
 
+exports.DiscountType = exports.$Enums.DiscountType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Event: 'Event',
   Transaction: 'Transaction',
   Review: 'Review',
   Voucher: 'Voucher',
+  VoucherUsage: 'VoucherUsage',
   Coupon: 'Coupon',
   PointHistory: 'PointHistory'
 };

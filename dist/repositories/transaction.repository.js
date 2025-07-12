@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cancelTransactionAndRollbackSeats = exports.updateTransactionStatus = exports.updateTransactionPaymentProof = exports.createTransactionWithSeatUpdate = exports.findEventByIdForTransaction = exports.findAllTransactionsByRoleAndStatus = exports.expireTransactionById = exports.findExpiredTransactions = exports.findTransactionById = void 0;
+exports.findVoucherByCode = exports.cancelTransactionAndRollbackSeats = exports.updateTransactionStatus = exports.updateTransactionPaymentProof = exports.createTransactionWithVoucherAndPoints = exports.findEventByIdForTransaction = exports.findAllTransactionsByRoleAndStatus = exports.expireTransactionById = exports.findExpiredTransactions = exports.findTransactionById = void 0;
 const prisma_1 = require("../config/prisma");
+const AppError_1 = __importDefault(require("../errors/AppError"));
 const findTransactionById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return prisma_1.prisma.transaction.findUnique({
         where: {
@@ -76,7 +80,7 @@ const findEventByIdForTransaction = (eventId) => __awaiter(void 0, void 0, void 
     });
 });
 exports.findEventByIdForTransaction = findEventByIdForTransaction;
-const createTransactionWithSeatUpdate = (userId, eventId, quantity, totalPaid, expiredAt) => __awaiter(void 0, void 0, void 0, function* () {
+const createTransactionWithVoucherAndPoints = (_a) => __awaiter(void 0, [_a], void 0, function* ({ userId, eventId, quantity, totalPaid, expiredAt, usedPoints = 0, voucherId = null, }) {
     return yield prisma_1.prisma.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
         const transaction = yield tx.transaction.create({
             data: {
@@ -85,6 +89,8 @@ const createTransactionWithSeatUpdate = (userId, eventId, quantity, totalPaid, e
                 quantity,
                 totalPaid,
                 expiredAt,
+                usedPoints,
+                voucherId,
                 status: "WAITING_PAYMENT",
             },
         });
@@ -96,10 +102,37 @@ const createTransactionWithSeatUpdate = (userId, eventId, quantity, totalPaid, e
                 },
             },
         });
+        if (voucherId !== null) {
+            yield tx.voucher.update({
+                where: { id: voucherId },
+                data: {
+                    used: { increment: 1 },
+                },
+            });
+            yield tx.voucherUsage.create({
+                data: {
+                    userId,
+                    voucherId,
+                },
+            });
+        }
+        if (usedPoints > 0) {
+            const user = yield tx.user.findUnique({ where: { id: userId } });
+            if (!user)
+                throw new AppError_1.default("User not found", 404);
+            if (user.points < usedPoints)
+                throw new AppError_1.default("Not enough points", 400);
+            yield tx.user.update({
+                where: { id: userId },
+                data: {
+                    points: { decrement: usedPoints },
+                },
+            });
+        }
         return transaction;
     }));
 });
-exports.createTransactionWithSeatUpdate = createTransactionWithSeatUpdate;
+exports.createTransactionWithVoucherAndPoints = createTransactionWithVoucherAndPoints;
 const updateTransactionPaymentProof = (_a) => __awaiter(void 0, [_a], void 0, function* ({ id, paymentProof, status, }) {
     return yield prisma_1.prisma.transaction.update({
         where: { id },
@@ -136,3 +169,12 @@ const cancelTransactionAndRollbackSeats = (_a) => __awaiter(void 0, [_a], void 0
     }));
 });
 exports.cancelTransactionAndRollbackSeats = cancelTransactionAndRollbackSeats;
+const findVoucherByCode = (code) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield prisma_1.prisma.voucher.findUnique({
+        where: { code },
+        include: {
+            event: true,
+        },
+    });
+});
+exports.findVoucherByCode = findVoucherByCode;

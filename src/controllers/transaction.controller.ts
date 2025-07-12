@@ -54,14 +54,33 @@ export class TransactionController {
     res: Response,
     next: NextFunction
   ) => {
-    const { eventId, quantity, totalPaid } = req.body;
     try {
       const userId = res.locals.decrypt.userId;
+      const { eventId, quantity, totalPaid, voucherCode, usedPoints } =
+        req.body;
+
+      const parsedEventId = Number(eventId);
+      const parsedQuantity = Number(quantity);
+      const parsedTotalPaid = Number(totalPaid);
+      const parsedUsedPoints = usedPoints ? Number(usedPoints) : 0;
+
+      if (
+        isNaN(parsedEventId) ||
+        isNaN(parsedQuantity) ||
+        isNaN(parsedTotalPaid)
+      ) {
+        throw new AppError(
+          "Invalid input: eventId, quantity, or totalPaid must be numbers",
+          400
+        );
+      }
       const transaction = await createTransactionService({
         userId,
-        eventId: Number(eventId),
-        quantity: Number(quantity),
-        totalPaid: Number(totalPaid),
+        eventId: parsedEventId,
+        quantity: parsedQuantity,
+        totalPaid: parsedTotalPaid,
+        voucherCode,
+        usedPoints: parsedUsedPoints,
       });
       res.status(201).send({ success: true, transaction });
     } catch (error) {

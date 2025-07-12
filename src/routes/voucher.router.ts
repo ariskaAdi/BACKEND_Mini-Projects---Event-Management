@@ -14,6 +14,7 @@ class VoucherRouter {
   }
 
   private initializeRoutes(): void {
+    this.route.get("/", this.voucherController.getAllVoucher);
     this.route.get("/:eventId", this.voucherController.getVoucherByEventId);
     this.route.post(
       "/",

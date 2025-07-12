@@ -4,12 +4,13 @@ import { cloudinaryUpload } from "../config/cloudinary";
 import AppError from "../errors/AppError";
 import {
   cancelTransactionAndRollbackSeats,
-  createTransactionWithSeatUpdate,
+  createTransactionWithVoucherAndPoints,
   expireTransactionById,
   findAllTransactionsByRoleAndStatus,
   findEventByIdForTransaction,
   findExpiredTransactions,
   findTransactionById,
+  findVoucherByCode,
   updateTransactionPaymentProof,
   updateTransactionStatus,
 } from "../repositories/transaction.repository";
@@ -90,7 +91,9 @@ export const createTransactionService = async ({
   eventId,
   quantity,
   totalPaid,
-}: CreateTransactionInput) => {
+  voucherCode,
+  usedPoints = 0,
+}: CreateTransactionInput & { voucherCode?: string; usedPoints?: number }) => {
   const event = await findEventByIdForTransaction(eventId);
   if (!event) {
     throw new AppError("Event not found", 404);
@@ -100,20 +103,53 @@ export const createTransactionService = async ({
     throw new AppError("Not enough seats", 400);
   }
 
-  const expectedTotalPaid = event.price * quantity;
-  if (expectedTotalPaid !== totalPaid) {
-    throw new AppError("Invalid total paid", 400);
+  const totalBeforeDiscount = event.price * quantity;
+
+  let discountAmount = 0;
+  let voucher = null;
+
+  if (voucherCode) {
+    voucher = await findVoucherByCode(voucherCode);
+
+    if (!voucher || voucher.eventId !== eventId) {
+      throw new AppError("Invalid voucher", 400);
+    }
+
+    const now = new Date();
+    if (voucher.startDate > now || voucher.endDate < now) {
+      throw new AppError("Voucher not valid at this time", 400);
+    }
+
+    if (voucher.used >= voucher.quota) {
+      throw new AppError("Voucher quota exceeded", 400);
+    }
+
+    discountAmount =
+      voucher.discountType === "PERCENTAGE"
+        ? Math.floor((totalBeforeDiscount * voucher.discount) / 100)
+        : voucher.discount * quantity;
   }
 
-  const expiredAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
+  const expectedTotal = Math.max(
+    0,
+    totalBeforeDiscount - discountAmount - usedPoints
+  );
 
-  const transaction = await createTransactionWithSeatUpdate(
+  if (expectedTotal !== totalPaid) {
+    throw new AppError("Total paid doesn't match expected total", 400);
+  }
+
+  const expiredAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 jam
+
+  const transaction = await createTransactionWithVoucherAndPoints({
     userId,
     eventId,
     quantity,
-    expectedTotalPaid,
-    expiredAt
-  );
+    totalPaid: expectedTotal,
+    expiredAt,
+    usedPoints,
+    voucherId: voucher?.id ?? null,
+  });
 
   return transaction;
 };

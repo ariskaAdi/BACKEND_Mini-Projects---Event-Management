@@ -40,6 +40,11 @@ enum EventCategory {
   OTHER
 }
 
+enum DiscountType {
+  FIXED
+  PERCENTAGE
+}
+
 model User {
   id             Int            @id @default(autoincrement())
   name           String
@@ -58,6 +63,7 @@ model User {
   reviews        Review[]
   coupons        Coupon[]
   pointHistories PointHistory[]
+  voucherUsages  VoucherUsage[]
 }
 
 model Event {
@@ -90,12 +96,14 @@ model Transaction {
   paymentProof String?
   quantity     Int
   totalPaid    Int
+  usedPoints   Int               @default(0)
   expiredAt    DateTime
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
-
-  user  User  @relation(fields: [userId], references: [id])
-  event Event @relation(fields: [eventId], references: [id])
+  voucherId    Int?
+  user         User              @relation(fields: [userId], references: [id])
+  event        Event             @relation(fields: [eventId], references: [id])
+  voucher      Voucher?          @relation(fields: [voucherId], references: [id])
 }
 
 model Review {
@@ -111,14 +119,31 @@ model Review {
 }
 
 model Voucher {
-  id        Int      @id @default(autoincrement())
-  code      String   @unique
-  discount  Int
-  eventId   Int
-  startDate DateTime
-  endDate   DateTime
+  id           Int          @id @default(autoincrement())
+  code         String       @unique
+  discount     Int
+  discountType DiscountType @default(FIXED)
+  quota        Int          @default(0)
+  used         Int          @default(10)
+  startDate    DateTime
+  endDate      DateTime
+  eventId      Int
 
-  event Event @relation(fields: [eventId], references: [id])
+  event        Event          @relation(fields: [eventId], references: [id])
+  transactions Transaction[]
+  usages       VoucherUsage[]
+}
+
+model VoucherUsage {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  voucherId Int
+  usedAt    DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  voucher Voucher @relation(fields: [voucherId], references: [id])
+
+  @@unique([userId, voucherId]) // user hanya bisa pakai 1 voucher sekali
 }
 
 model Coupon {

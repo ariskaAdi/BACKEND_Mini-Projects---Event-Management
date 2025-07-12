@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Voucher" ALTER COLUMN "quota" SET DEFAULT 0,
+ALTER COLUMN "used" SET DEFAULT 10;

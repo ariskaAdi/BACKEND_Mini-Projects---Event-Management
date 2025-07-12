@@ -50,14 +50,25 @@ class TransactionController {
         });
         // membuat transaction
         this.createdTransaction = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const { eventId, quantity, totalPaid } = req.body;
             try {
                 const userId = res.locals.decrypt.userId;
+                const { eventId, quantity, totalPaid, voucherCode, usedPoints } = req.body;
+                const parsedEventId = Number(eventId);
+                const parsedQuantity = Number(quantity);
+                const parsedTotalPaid = Number(totalPaid);
+                const parsedUsedPoints = usedPoints ? Number(usedPoints) : 0;
+                if (isNaN(parsedEventId) ||
+                    isNaN(parsedQuantity) ||
+                    isNaN(parsedTotalPaid)) {
+                    throw new AppError_1.default("Invalid input: eventId, quantity, or totalPaid must be numbers", 400);
+                }
                 const transaction = yield (0, transaction_service_1.createTransactionService)({
                     userId,
-                    eventId: Number(eventId),
-                    quantity: Number(quantity),
-                    totalPaid: Number(totalPaid),
+                    eventId: parsedEventId,
+                    quantity: parsedQuantity,
+                    totalPaid: parsedTotalPaid,
+                    voucherCode,
+                    usedPoints: parsedUsedPoints,
                 });
                 res.status(201).send({ success: true, transaction });
             }

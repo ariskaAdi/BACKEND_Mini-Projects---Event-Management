@@ -13,6 +13,7 @@ const event_router_1 = __importDefault(require("./routes/event.router"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const transaction_router_1 = __importDefault(require("./routes/transaction.router"));
 const review_router_1 = __importDefault(require("./routes/review.router"));
+const voucher_router_1 = __importDefault(require("./routes/voucher.router"));
 const PORT = process.env.PORT || 4000;
 class App {
     constructor() {
@@ -31,6 +32,7 @@ class App {
         const eventRouter = new event_router_1.default();
         const transactionRouter = new transaction_router_1.default();
         const reviewRouter = new review_router_1.default();
+        const voucherRouter = new voucher_router_1.default();
         this.app.get("/", (req, res) => {
             res.status(200).send("<h1>Welcome to the API</h1>");
         });
@@ -39,6 +41,7 @@ class App {
         this.app.use("/event", eventRouter.getRouter());
         this.app.use("/transaction", transactionRouter.getRouter());
         this.app.use("/review", reviewRouter.getRouter());
+        this.app.use("/voucher", voucherRouter.getRouter());
     }
     errorHandler() {
         this.app.use((error, req, res, next) => {
