@@ -41,12 +41,17 @@ const createVoucherServices = (input) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.createVoucherServices = createVoucherServices;
 const getVoucherByEventIdServices = (eventId) => __awaiter(void 0, void 0, void 0, function* () {
-    const voucher = yield (0, voucher_repository_1.findVoucherByEventId)(eventId);
+    const vouchers = yield (0, voucher_repository_1.findVoucherByEventId)(eventId);
     // console.log("Found voucher:", voucher);
-    if (!voucher || (Array.isArray(voucher) && voucher.length === 0)) {
-        throw new AppError_1.default("Voucher not found", 404);
+    if (!vouchers || vouchers.length === 0) {
+        throw new AppError_1.default("No valid vouchers found", 404);
     }
-    return voucher;
+    // Filter voucher yang masih valid (kuota tersisa)
+    const validVouchers = vouchers.filter((voucher) => voucher.used < voucher.quota);
+    if (validVouchers.length === 0) {
+        throw new AppError_1.default("All vouchers are used up", 400);
+    }
+    return validVouchers;
 });
 exports.getVoucherByEventIdServices = getVoucherByEventIdServices;
 const getAllvoucherServices = () => __awaiter(void 0, void 0, void 0, function* () {

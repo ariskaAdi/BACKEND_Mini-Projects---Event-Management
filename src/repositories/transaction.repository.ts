@@ -133,19 +133,28 @@ export const createTransactionWithVoucherAndPoints = async ({
     });
 
     if (voucherId !== null) {
-      await tx.voucher.update({
-        where: { id: voucherId },
-        data: {
-          used: { increment: 1 },
-        },
-      });
-
-      await tx.voucherUsage.create({
-        data: {
+      const alreadyUsed = await tx.voucherUsage.findFirst({
+        where: {
           userId,
           voucherId,
         },
       });
+
+      if (!alreadyUsed) {
+        await tx.voucher.update({
+          where: { id: voucherId },
+          data: {
+            used: { increment: 1 },
+          },
+        });
+
+        await tx.voucherUsage.create({
+          data: {
+            userId,
+            voucherId,
+          },
+        });
+      }
     }
 
     if (usedPoints > 0) {

@@ -74,6 +74,7 @@ export const findAllEventsByOrganizerId = async (organizerId: number) => {
           profilePicture: true,
         },
       },
+      vouchers: true,
     },
   });
 };
@@ -83,7 +84,16 @@ export const findEventById = async (id: number) => {
     where: {
       id,
     },
-    select: eventWithOrganizerSelect,
+    include: {
+      organizer: {
+        select: {
+          name: true,
+          email: true,
+          profilePicture: true,
+        },
+      },
+      vouchers: true,
+    },
   });
   return event;
 };

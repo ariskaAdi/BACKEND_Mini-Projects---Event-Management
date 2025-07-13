@@ -77,6 +77,7 @@ const findAllEventsByOrganizerId = (organizerId) => __awaiter(void 0, void 0, vo
                     profilePicture: true,
                 },
             },
+            vouchers: true,
         },
     });
 });
@@ -86,7 +87,16 @@ const findEventById = (id) => __awaiter(void 0, void 0, void 0, function* () {
         where: {
             id,
         },
-        select: eventWithOrganizerSelect,
+        include: {
+            organizer: {
+                select: {
+                    name: true,
+                    email: true,
+                    profilePicture: true,
+                },
+            },
+            vouchers: true,
+        },
     });
     return event;
 });

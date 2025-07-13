@@ -103,18 +103,26 @@ const createTransactionWithVoucherAndPoints = (_a) => __awaiter(void 0, [_a], vo
             },
         });
         if (voucherId !== null) {
-            yield tx.voucher.update({
-                where: { id: voucherId },
-                data: {
-                    used: { increment: 1 },
-                },
-            });
-            yield tx.voucherUsage.create({
-                data: {
+            const alreadyUsed = yield tx.voucherUsage.findFirst({
+                where: {
                     userId,
                     voucherId,
                 },
             });
+            if (!alreadyUsed) {
+                yield tx.voucher.update({
+                    where: { id: voucherId },
+                    data: {
+                        used: { increment: 1 },
+                    },
+                });
+                yield tx.voucherUsage.create({
+                    data: {
+                        userId,
+                        voucherId,
+                    },
+                });
+            }
         }
         if (usedPoints > 0) {
             const user = yield tx.user.findUnique({ where: { id: userId } });

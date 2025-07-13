@@ -44,14 +44,18 @@ const createVoucher = (eventId_1, code_1, discount_1, startDate_1, endDate_1, qu
 });
 exports.createVoucher = createVoucher;
 const findVoucherByEventId = (eventId) => __awaiter(void 0, void 0, void 0, function* () {
+    const now = new Date();
     const voucher = yield prisma_1.prisma.voucher.findMany({
         where: {
             eventId,
-            // startDate: { lte: new Date() },
-            // endDate: { gte: new Date() },
+            startDate: { lte: now },
+            endDate: { gte: now },
         },
         orderBy: {
             startDate: "desc",
+        },
+        include: {
+            usages: true,
         },
     });
     return voucher;

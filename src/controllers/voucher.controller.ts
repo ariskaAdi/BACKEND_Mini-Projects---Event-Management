@@ -5,6 +5,7 @@ import {
   getVoucherByEventIdServices,
 } from "../services/voucher.service";
 import AppError from "../errors/AppError";
+import { getAllEventByOrganizerServices } from "../services/event.service";
 
 class VoucherController {
   public getAllVoucher = async (
@@ -58,6 +59,15 @@ class VoucherController {
         throw new AppError("Missing required fields", 400);
       }
       const userId = res.locals.decrypt.userId;
+
+      const event = await getAllEventByOrganizerServices(userId);
+
+      if (userId !== event[0].organizerId) {
+        throw new AppError(
+          "Unauthorized, you are not the organizer of this event",
+          403
+        );
+      }
 
       const result = await createVoucherServices({
         eventId: Number(eventId),

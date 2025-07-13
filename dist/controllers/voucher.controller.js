@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const voucher_service_1 = require("../services/voucher.service");
 const AppError_1 = __importDefault(require("../errors/AppError"));
+const event_service_1 = require("../services/event.service");
 class VoucherController {
     constructor() {
         this.getAllVoucher = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
@@ -45,6 +46,10 @@ class VoucherController {
                     throw new AppError_1.default("Missing required fields", 400);
                 }
                 const userId = res.locals.decrypt.userId;
+                const event = yield (0, event_service_1.getAllEventByOrganizerServices)(userId);
+                if (userId !== event[0].organizerId) {
+                    throw new AppError_1.default("Unauthorized, you are not the organizer of this event", 403);
+                }
                 const result = yield (0, voucher_service_1.createVoucherServices)({
                     eventId: Number(eventId),
                     discount: Number(discount),

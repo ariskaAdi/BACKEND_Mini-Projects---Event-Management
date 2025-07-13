@@ -50,12 +50,21 @@ export const createVoucherServices = async (input: IVoucher) => {
 };
 
 export const getVoucherByEventIdServices = async (eventId: number) => {
-  const voucher = await findVoucherByEventId(eventId);
+  const vouchers = await findVoucherByEventId(eventId);
   // console.log("Found voucher:", voucher);
-  if (!voucher || (Array.isArray(voucher) && voucher.length === 0)) {
-    throw new AppError("Voucher not found", 404);
+  if (!vouchers || vouchers.length === 0) {
+    throw new AppError("No valid vouchers found", 404);
   }
-  return voucher;
+
+  // Filter voucher yang masih valid (kuota tersisa)
+  const validVouchers = vouchers.filter(
+    (voucher) => voucher.used < voucher.quota
+  );
+
+  if (validVouchers.length === 0) {
+    throw new AppError("All vouchers are used up", 400);
+  }
+  return validVouchers;
 };
 
 export const getAllvoucherServices = async () => {

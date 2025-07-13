@@ -972,3 +972,128 @@ Please make sure your database server is running at `aws-0-us-west-1.pooler.supa
 2025-07-12 18:28:22 [ERROR]: POST /transaction Invalid voucher {"statusCode":400,"success":false,"message":"Invalid voucher"}
 2025-07-12 18:30:05 [ERROR]: POST /transaction Voucher not valid at this time {"statusCode":400,"success":false,"message":"Voucher not valid at this time"}
 2025-07-12 18:35:21 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 11:43:46 [ERROR]: POST /voucher Unauthorized, you are not the organizer of this event {"statusCode":403,"success":false,"message":"Unauthorized, you are not the organizer of this event"}
+2025-07-13 11:46:36 [ERROR]: POST /voucher Unauthorized, you are not the organizer of this event {"statusCode":403,"success":false,"message":"Unauthorized, you are not the organizer of this event"}
+2025-07-13 11:47:58 [ERROR]: POST /voucher Unauthorized, you are not the organizer of this event {"statusCode":403,"success":false,"message":"Unauthorized, you are not the organizer of this event"}
+2025-07-13 11:49:35 [ERROR]: POST /voucher Unauthorized, you are not the organizer of this event {"statusCode":403,"success":false,"message":"Unauthorized, you are not the organizer of this event"}
+2025-07-13 11:54:20 [ERROR]: POST /voucher 
+Invalid `tx.voucher.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\voucher.repository.ts:28:41
+
+  25 }
+  26 
+  27 // membuat voucher untuk pertama kali
+→ 28 const newVoucher = await tx.voucher.create({
+       data: {
+         eventId: 6,
+         code: "RUN2025",
+         discount: 10,
+         startDate: new Date("2025-07-14T00:00:00.000Z"),
+         endDate: new Date("2025-07-20T23:59:59.000Z"),
+         quota: 10,
+         discountType: "PRECENTAGE"
+                       ~~~~~~~~~~~~
+       }
+     })
+
+Invalid value for argument `discountType`. Expected DiscountType. {"name":"PrismaClientValidationError","clientVersion":"6.10.1"}
+2025-07-13 11:56:36 [ERROR]: POST /voucher Only organizers can access this route {"statusCode":403,"success":false,"message":"Only organizers can access this route"}
+2025-07-13 11:57:18 [ERROR]: POST /auth/login Invalid password {"statusCode":401,"success":false,"message":"Invalid password"}
+2025-07-13 11:58:54 [ERROR]: POST /voucher No events found by this organizer {"statusCode":404,"success":false,"message":"No events found by this organizer"}
+2025-07-13 12:01:36 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-13 14:28:20 [ERROR]: GET /event/12 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:82:36
+
+  79 };
+  80 
+  81 export const findEventById = async (id: number) => {
+→ 82   const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 14:29:51 [ERROR]: GET /event/12 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:82:36
+
+  79 };
+  80 
+  81 export const findEventById = async (id: number) => {
+→ 82   const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 14:41:41 [ERROR]: POST /transaction Invalid voucher {"statusCode":400,"success":false,"message":"Invalid voucher"}
+2025-07-13 14:55:22 [ERROR]: GET /event/13 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:82:36
+
+  79 };
+  80 
+  81 export const findEventById = async (id: number) => {
+→ 82   const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 14:55:22 [ERROR]: GET /event/12 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:82:36
+
+  79 };
+  80 
+  81 export const findEventById = async (id: number) => {
+→ 82   const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 16:27:44 [ERROR]: GET /voucher/6 No valid vouchers found {"statusCode":404,"success":false,"message":"No valid vouchers found"}
+2025-07-13 16:29:14 [ERROR]: GET /voucher/2 No valid vouchers found {"statusCode":404,"success":false,"message":"No valid vouchers found"}
+2025-07-13 16:35:57 [ERROR]: GET /voucher/6 No valid vouchers found {"statusCode":404,"success":false,"message":"No valid vouchers found"}
+2025-07-13 17:08:14 [ERROR]: GET /event/5 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:82:36
+
+  79 };
+  80 
+  81 export const findEventById = async (id: number) => {
+→ 82   const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 17:08:14 [ERROR]: GET /event/13 
+Invalid `prisma.event.findUnique()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\event.repository.ts:82:36
+
+  79 };
+  80 
+  81 export const findEventById = async (id: number) => {
+→ 82   const event = await prisma.event.findUnique(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Event","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 17:16:32 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 17:26:39 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 17:29:26 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 17:35:26 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 17:36:10 [ERROR]: POST /transaction 
+Invalid `tx.voucherUsage.create()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\transaction.repository.ts:143:29
+
+  140   },
+  141 });
+  142 
+→ 143 await tx.voucherUsage.create(
+Unique constraint failed on the fields: (`userId`,`voucherId`) {"code":"P2002","meta":{"modelName":"VoucherUsage","target":["userId","voucherId"]},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 18:46:04 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 18:48:50 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 18:49:32 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 18:57:05 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 19:24:12 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 19:25:18 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 19:28:42 [ERROR]: POST /transaction Transaction API error: Transaction not found. Transaction ID is invalid, refers to an old closed transaction Prisma doesn't have information about anymore, or was obtained before disconnecting. {"code":"P2028","meta":{"error":"Transaction not found. Transaction ID is invalid, refers to an old closed transaction Prisma doesn't have information about anymore, or was obtained before disconnecting."},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-13 19:44:18 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 19:44:44 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-13 19:46:51 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 19:50:38 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 19:52:53 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
+2025-07-13 19:57:44 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}

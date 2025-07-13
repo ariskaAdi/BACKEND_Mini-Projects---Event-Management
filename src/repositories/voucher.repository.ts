@@ -43,16 +43,21 @@ export const createVoucher = async (
 };
 
 export const findVoucherByEventId = async (eventId: number) => {
+  const now = new Date();
   const voucher = await prisma.voucher.findMany({
     where: {
       eventId,
-      // startDate: { lte: new Date() },
-      // endDate: { gte: new Date() },
+      startDate: { lte: now },
+      endDate: { gte: now },
     },
     orderBy: {
       startDate: "desc",
     },
+    include: {
+      usages: true,
+    },
   });
+
   return voucher;
 };
 
