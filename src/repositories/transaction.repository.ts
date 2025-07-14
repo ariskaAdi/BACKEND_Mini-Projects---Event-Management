@@ -78,6 +78,9 @@ export const findAllTransactionsByRoleAndStatus = async (
       },
       event: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 };
 

@@ -1097,3 +1097,33 @@ Unique constraint failed on the fields: (`userId`,`voucherId`) {"code":"P2002","
 2025-07-13 19:50:38 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
 2025-07-13 19:52:53 [ERROR]: POST /transaction Total paid doesn't match expected total {"statusCode":400,"success":false,"message":"Total paid doesn't match expected total"}
 2025-07-13 19:57:44 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 21:22:53 [ERROR]: GET /voucher 
+Invalid `prisma.voucher.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\voucher.repository.ts:65:40
+
+  62 };
+  63 
+  64 export const getAllVoucher = async () => {
+→ 65   const voucher = await prisma.voucher.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Voucher","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-14 21:25:34 [ERROR]: POST /auth/login User not found {"statusCode":404,"success":false,"message":"User not found"}
+2025-07-14 21:35:38 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 21:55:13 [ERROR]: GET /user/profile/get/me Token expired {"statusCode":401,"success":false,"message":"Token expired"}
+2025-07-14 21:55:53 [ERROR]: GET /voucher 
+Invalid `prisma.voucher.findMany()` invocation in
+D:\adi\purwhadika\Mini Projects - Event Management\BACKEND\src\repositories\voucher.repository.ts:65:40
+
+  62 };
+  63 
+  64 export const getAllVoucher = async () => {
+→ 65   const voucher = await prisma.voucher.findMany(
+Can't reach database server at `aws-0-us-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-us-west-1.pooler.supabase.com:6543`. {"code":"P1001","meta":{"modelName":"Voucher","database_host":"aws-0-us-west-1.pooler.supabase.com","database_port":6543},"clientVersion":"6.10.1","name":"PrismaClientKnownRequestError"}
+2025-07-14 22:07:14 [ERROR]: PATCH /transaction/admin/16 Invalid action {"statusCode":400,"success":false,"message":"Invalid action"}
+2025-07-14 22:09:15 [ERROR]: PATCH /transaction/admin/16 Invalid action {"statusCode":400,"success":false,"message":"Invalid action"}
+2025-07-14 22:10:20 [ERROR]: PATCH /transaction/admin/16 Invalid action {"statusCode":400,"success":false,"message":"Invalid action"}
+2025-07-14 22:37:54 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 22:38:15 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}

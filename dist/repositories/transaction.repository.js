@@ -66,6 +66,9 @@ const findAllTransactionsByRoleAndStatus = (userId, role, status) => __awaiter(v
             },
             event: true,
         },
+        orderBy: {
+            createdAt: "desc",
+        },
     });
 });
 exports.findAllTransactionsByRoleAndStatus = findAllTransactionsByRoleAndStatus;
