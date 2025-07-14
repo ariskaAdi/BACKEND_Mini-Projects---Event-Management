@@ -22,7 +22,16 @@ class App {
   }
 
   private configure(): void {
-    this.app.use(cors());
+    const allowedOrigins = [
+      "http://localhost:3000", // untuk local dev
+      "https://event-management-96l4.vercel.app", // URL frontend di Vercel
+    ];
+    this.app.use(
+      cors({
+        origin: allowedOrigins,
+        credentials: true,
+      })
+    );
     this.app.use(express.json());
   }
 

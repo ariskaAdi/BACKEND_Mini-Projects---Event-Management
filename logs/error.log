@@ -1127,3 +1127,9 @@ Please make sure your database server is running at `aws-0-us-west-1.pooler.supa
 2025-07-14 22:10:20 [ERROR]: PATCH /transaction/admin/16 Invalid action {"statusCode":400,"success":false,"message":"Invalid action"}
 2025-07-14 22:37:54 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
 2025-07-14 22:38:15 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 23:50:56 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 23:51:13 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 23:58:39 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-14 23:59:44 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-15 00:12:51 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}
+2025-07-15 00:37:38 [ERROR]: GET /event/undraw_avatar.svg Invalid event ID {"statusCode":400,"success":false,"message":"Invalid event ID"}

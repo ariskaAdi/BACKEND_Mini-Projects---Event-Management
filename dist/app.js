@@ -23,7 +23,14 @@ class App {
         this.errorHandler();
     }
     configure() {
-        this.app.use((0, cors_1.default)());
+        const allowedOrigins = [
+            "http://localhost:3000", // untuk local dev
+            "https://event-management-96l4.vercel.app", // URL frontend di Vercel
+        ];
+        this.app.use((0, cors_1.default)({
+            origin: allowedOrigins,
+            credentials: true,
+        }));
         this.app.use(express_1.default.json());
     }
     route() {
